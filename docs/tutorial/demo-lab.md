@@ -6,7 +6,14 @@ type: Tutorial
 
 ## Overview
 
-This tutorial provides a hands-on walkthrough of the Hedgehog Demo Lab in VLAB. You will create VPCs, attach and peer them, and test connectivity between servers using the default and custom topologies. This guide assumes you have already completed the "Running VLAB" tutorial and have a working VLAB environment.
+This tutorial provides a hands-on walkthrough of the Hedgehog Demo Lab in VLAB. You will create VPCs, attach and peer them, and test connectivity between servers using the default and custom topologies.
+
+> **Prerequisite:**
+> This tutorial assumes you have already completed the following steps:
+> - [Getting Started](getting-started.md): Access, install, and configure the CLI
+> - [Running VLAB](running-vlab.md): Generate and bring up your VLAB environment (i.e., `hhfab vlab up`)
+>
+> **You must have a running VLAB environment before proceeding.**
 
 ---
 
