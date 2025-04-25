@@ -241,10 +241,10 @@ Label column is a port label on a physical switch.
 | M2     | M2    | Direct    | Management1     | -     | 10G     | 1G, 10G   |
 | E1/1   | 1     | Breakout  | Ethernet1/1     | -     | 2x400G  | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/2   | 2     | Breakout  | Ethernet1/2     | -     | 2x400G  | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/2 | 2 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/3 | 3 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/4 | 4 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/5 | 5 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/3   | 3     | Breakout  | Ethernet1/3     | -     | 2x400G  | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/4   | 4     | Breakout  | Ethernet1/4     | -     | 2x400G  | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/5   | 5     | Breakout  | Ethernet1/5     | -     | 2x400G  | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/6   | 6     | Breakout  | Ethernet1/6     | -     | 2x400G  | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/6 | 6 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/7 | 7 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/8 | 8 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
