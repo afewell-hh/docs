@@ -369,8 +369,8 @@ Label column is a port label on a physical switch.
 
 | Port | Label | Type | Group | Default | Supported |
 |------|-------|------|-------|---------|-----------|
-| M1 | M1 | Direct |  | 25G | 1G, 10G, 25G |
-| M2 | M2 | Direct |  | 25G | 1G, 10G, 25G |
+| M1 | M1 | Direct | Management0 | - | 25G | 1G, 10G, 25G |
+| M2 | M2 | Direct | Management1 | - | 25G | 1G, 10G, 25G |
 | E1/1 | 1 | Breakout |  | 1x800G | 1x100G, 1x200G, 1x400G, 1x50G, 1x800G, 2x100G, 2x200G, 2x400G, 2x50G, 4x100G, 4x200G, 8x100G |
 | E1/2 | 2 | Breakout |  | 1x800G | 1x100G, 1x200G, 1x400G, 1x50G, 1x800G, 2x100G, 2x200G, 2x400G, 2x50G, 4x100G, 4x200G, 8x100G |
 | E1/3 | 3 | Breakout |  | 1x800G | 1x100G, 1x200G, 1x400G, 1x50G, 1x800G, 2x100G, 2x200G, 2x400G, 2x50G, 4x100G, 4x200G, 8x100G |
