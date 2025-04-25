@@ -235,12 +235,12 @@ Ports Summary: **32xOSFP-2x400G, 2xSFP28-10G**
 **Available Ports:**
 
 Label column is a port label on a physical switch.
-
-| Port | Label | Type | Group | Default | Supported |
-|------|-------|------|-------|---------|-----------|
-| M1 | M1 | Direct |  | 10G | 1G, 10G |
-| M2 | M2 | Direct |  | 10G | 1G, 10G |
-| E1/1 | 1 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| Port   | Label | Type      | NOS Name        | Group | Default | Supported |
+|--------|-------|-----------|-----------------|-------|---------|-----------|
+| M1     | M1    | Direct    | Management0     | -     | 10G     | 1G, 10G   |
+| M2     | M2    | Direct    | Management1     | -     | 10G     | 1G, 10G   |
+| E1/1   | 1     | Breakout  | Ethernet1/1     | -     | 2x400G  | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/2   | 2     | Breakout  | Ethernet1/2     | -     | 2x400G  | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/2 | 2 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/3 | 3 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/4 | 4 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
