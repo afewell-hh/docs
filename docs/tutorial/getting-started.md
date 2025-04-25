@@ -113,7 +113,7 @@ hhfab --version
 
 - [VLAB Overview](../vlab/overview.md): System requirements, concepts, and architecture
 - [Deploying Hedgehog CLI](../how-to/deploying-cli.md): Detailed installation and troubleshooting
-- [Fabric CLI Reference](../reference/cli.md): CLI command reference
+- [Fabric CLI Reference](../reference/fabric-cli.md): CLI command reference
 
 ---
 

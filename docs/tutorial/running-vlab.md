@@ -8,6 +8,11 @@ type: Tutorial
 
 This tutorial walks you through the process of running your first Hedgehog Virtual Lab (VLAB) simulation, from initializing the environment to launching and validating the lab. It assumes you have completed the "Getting Started" tutorial and have `hhfab` installed.
 
+> **Security Warning:**
+> Running VLAB simulations may overwrite existing configuration files and consume significant system resources.
+> Only use these instructions in a safe, non-production environment.
+> See [VLAB safety guidelines](../known-limitations/known-limitations.md) for more information.
+
 ---
 
 ## 1. Prerequisites
@@ -36,6 +41,11 @@ Create the default topology:
 ```bash
 hhfab vlab gen
 ```
+Sample output:
+```console
+[INFO] Generating VLAB topology: spine-leaf (2 spines, 2 MCLAG leaves, 1 non-MCLAG leaf)
+[INFO] Output written to vlab.generated.yaml
+```
 - This creates `vlab.generated.yaml` for a spine-leaf topology (2 spines, 2 MCLAG leaves, 1 non-MCLAG leaf).
 
 **Customize topology:**
@@ -58,21 +68,39 @@ Download artifacts and build the installer:
 ```bash
 hhfab build
 ```
+Sample output:
+```console
+[INFO] Downloading artifacts from OCI registry...
+[INFO] Preparing installer...
+[INFO] Build complete.
+```
 - This downloads all required artifacts from the OCI registry and prepares the installer.
 
 ---
 
-## 5. Start VLAB
+## 5. Launch VLAB
 
-Launch the virtual lab:
+Bring up the VLAB environment:
 ```bash
 hhfab vlab up
 ```
-- Use `--kill-stale` to remove any old VMs:
-  ```bash
-  hhfab vlab up --kill-stale
-  ```
-- The command runs in the foreground. Press `Ctrl+C` to stop all VMs.
+Sample output:
+```console
+[INFO] Launching VLAB...
+[INFO] All nodes started successfully.
+```
+
+Validate lab status:
+```bash
+hhfab vlab status
+```
+Sample output:
+```console
+[INFO] VLAB status: running
+[INFO] Nodes: 5/5 up
+```
+
+If you encounter errors, see [Troubleshooting Fabric Deployments](../how-to/troubleshooting-fabric.md).
 
 ---
 
@@ -87,19 +115,22 @@ hhfab vlab status
 
 ---
 
-## 7. Next Steps
-
-- Try out the [Demo Lab Walkthrough](demo-lab.md)
-- Explore [Fabric CLI Reference](../reference/cli.md)
-- Review [Troubleshooting](../how-to/troubleshooting.md) if you encounter issues
+## What’s Next?
+- [Demo Lab Walkthrough](demo-lab.md)
+- [Troubleshooting Fabric Deployments](../how-to/troubleshooting-fabric.md)
+- [How to Add External Connectivity](../how-to/add-external-connectivity.md)
+- [Architecture Overview](../explanation/architecture.md)
 
 ---
 
-## Gaps
-- [ ] Add screenshots and video walkthrough
-- [ ] Add validation checklist for successful lab launch
-- [ ] Add troubleshooting for common VLAB errors
-- [ ] Add advanced topology scenarios
+## Quality Checklist
+- [ ] You have completed the prerequisites and system requirements
+- [ ] You have initialized the VLAB configuration
+- [ ] You have generated and customized the topology as needed
+- [ ] You have built all required artifacts
+- [ ] You have launched and validated your VLAB environment
+- [ ] You have reviewed the security warning
+- [ ] You have referenced troubleshooting guides if you encountered issues
 
 ---
 

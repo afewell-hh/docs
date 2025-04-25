@@ -8,6 +8,10 @@ type: Tutorial
 
 This tutorial provides a hands-on walkthrough of the Hedgehog Demo Lab in VLAB. You will create VPCs, attach and peer them, and test connectivity between servers using the default and custom topologies.
 
+> **Security Warning:**
+> This tutorial will modify your virtual lab network state. Only run these commands in a safe, isolated lab environment.
+> For more information, see [VLAB safety guidelines](../known-limitations/known-limitations.md).
+
 > **Prerequisite:**
 > This tutorial assumes you have already completed the following steps:
 > - [Getting Started](getting-started.md): Access, install, and configure the CLI
@@ -130,6 +134,16 @@ ip addr
 ```
 Check for the expected IP addresses and VLAN interfaces.
 
+Example output:
+```console
+server1$ ping server2
+PING server2 (10.0.2.10) 56(84) bytes of data.
+64 bytes from 10.0.2.10: icmp_seq=1 ttl=64 time=0.31 ms
+64 bytes from 10.0.2.10: icmp_seq=2 ttl=64 time=0.29 ms
+```
+
+If you see packet loss or no response, see [Troubleshooting Fabric Deployments](../how-to/troubleshooting-fabric.md).
+
 ---
 
 ## 5. Experiment and Extend
@@ -150,11 +164,22 @@ Or use the `hhfab vlab` utilities for bulk cleanup.
 
 ---
 
-## Gaps
-- [ ] Add sample output for each command
-- [ ] Add troubleshooting for failed peering or connectivity
-- [ ] Add advanced demo scenarios (external peering, multi-tenancy)
-- [ ] Add video walkthrough
+## What’s Next?
+- [How to Add External Connectivity](../how-to/add-external-connectivity.md)
+- [How to Upgrade Hedgehog Fabric](../how-to/upgrading-fabric.md)
+- [Troubleshooting Fabric Deployments](../how-to/troubleshooting-fabric.md)
+- [Architecture Overview](../explanation/architecture.md)
+
+---
+
+## Quality Checklist
+- [ ] You have a running VLAB environment and CLI installed
+- [ ] You have reviewed and understood the security warning
+- [ ] You have reviewed the default topology
+- [ ] You have created, attached, and peered VPCs
+- [ ] You have tested connectivity between servers
+- [ ] You have referenced troubleshooting guides if you encountered issues
+- [ ] You have confirmed your environment matches prerequisites
 
 ---
 
@@ -163,3 +188,10 @@ Diátaxis: Tutorial
 Version: Hedgehog v1.0.0
 Last updated: 2025-04-22
 -->
+
+---
+## Gaps
+- [ ] Add sample output for each command
+- [ ] Add troubleshooting for failed peering or connectivity
+- [ ] Add advanced demo scenarios (external peering, multi-tenancy)
+- [ ] Add video walkthrough

@@ -48,6 +48,30 @@ theme:
         icon: material/weather-sunny
         name: Switch to light mode
 
+nav:
+  - Home: index.md
+  - Tutorials:
+      - Getting Started: tutorial/getting-started-lab.md
+      - Demo Lab: tutorial/demo-lab.md
+      - Running VLAB: tutorial/running-vlab.md
+  - How-to Guides:
+      - Power-Reset a Switch: how-to/power-reset-switch.md
+      - Upgrade Hedgehog Fabric: how-to/upgrading-fabric.md
+      - Add External Connectivity: how-to/add-external-connectivity.md
+      - Troubleshooting Fabric: how-to/troubleshooting-fabric.md
+      - Deploying CLI: how-to/deploying-cli.md
+  - Explanations:
+      - Architecture Overview: explanation/architecture.md
+      - VPC Peering and Isolation: explanation/vpc-peering.md
+      - Security Model: explanation/security-model.md
+  - Reference:
+      - Fabric CLI Reference: reference/fabric-cli.md
+      - Fabric API Reference: reference/fabric-api.md
+      - Release Notes: reference/release-notes.md
+      - Supported Devices: reference/supported-devices.md
+      - Deprecated API Reference: reference/fab-api.md
+  - Contributing: contribute/docs.md
+
 extra:
   homepage: https://docs.hedgehog.cloud
   version:
@@ -78,14 +102,6 @@ extra:
   social:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/githedgehog/
-
-  # consent:
-  #   title: Cookie consent
-  #   description: >-
-  #     We use cookies to recognize your repeated visits and preferences, as well
-  #     as to measure the effectiveness of our documentation and whether users
-  #     find what they're searching for. With your consent, you're helping us to
-  #     make our documentation better.
 
 repo_url: https://github.com/githedgehog/docs
 repo_name: githedgehog/docs
