@@ -190,6 +190,7 @@ Label column is a port label on a physical switch.
 - **SFP28-10G**: Default 10G, Supported 1G, 10G
 
 **Example configuration:**
+> Hedgehog release: <REPLACE_WITH_VERSION>
 apiVersion: fabric.hedgehog.com/v1
 kind: Switch
 metadata:
@@ -328,6 +329,7 @@ Label column is a port label on a physical switch.
 - **SFP28-10G**: Default 10G, Supported 1G, 10G
 
 **Example configuration:**
+> Hedgehog release: <REPLACE_WITH_VERSION>
 
 ```yaml
 apiVersion: fabric.hedgehog.com/v1
@@ -444,6 +446,7 @@ Label column is a port label on a physical switch.
 - **SFP28-25G**: Default 25G, Supported 1G, 10G, 25G
 
 **Example configuration:**
+> Hedgehog release: <REPLACE_WITH_VERSION>
 
 ```yaml
 apiVersion: fabric.hedgehog.com/v1
@@ -529,6 +532,7 @@ Label column is a port label on a physical switch.
 - **SFP28-10G**: Default 10G, Supported 1G, 10G
 
 **Example configuration:**
+> Hedgehog release: <REPLACE_WITH_VERSION>
 
 ```yaml
 apiVersion: fabric.hedgehog.com/v1
@@ -636,6 +640,7 @@ Label column is a port label on a physical switch.
 - **QSFP28-100G**: Default 100G, Supported 100G
 
 **Example configuration:**
+> Hedgehog release: <REPLACE_WITH_VERSION>
 
 ```yaml
 apiVersion: fabric.hedgehog.com/v1
@@ -722,6 +727,7 @@ Label column is a port label on a physical switch.
 - **SFP28-10G**: Default 10G, Supported 1G, 10G
 
 **Example configuration:**
+> Hedgehog release: <REPLACE_WITH_VERSION>
 
 ```yaml
 apiVersion: fabric.hedgehog.com/v1
@@ -832,6 +838,7 @@ Label column is a port label on a physical switch.
 - **SFP28-10G**: Default 10G, Supported 1G, 10G
 
 **Example configuration:**
+> Hedgehog release: <REPLACE_WITH_VERSION>
 
 ```yaml
 apiVersion: fabric.hedgehog.com/v1
@@ -919,6 +926,7 @@ Label column is a port label on a physical switch.
 - **SFP28-10G**: Default 10G, Supported 1G, 10G
 
 **Example configuration:**
+> Hedgehog release: <REPLACE_WITH_VERSION>
 
 ```yaml
 apiVersion: fabric.hedgehog.com/v1
@@ -1002,6 +1010,7 @@ Label column is a port label on a physical switch.
 - **QSFP28-100G**: Default 100G, Supported 100G, 40G, 4x10G, 4x25G
 
 **Example configuration:**
+> Hedgehog release: <REPLACE_WITH_VERSION>
 
 ```yaml
 apiVersion: fabric.hedgehog.com/v1
