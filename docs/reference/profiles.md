@@ -142,7 +142,6 @@ Ports Summary: **32xQSFPDD-400G, 1xSFP28-10G**
 - Subinterfaces: false
 - VXLAN: false
 - ACLs: true
-- ACLs: true
 
 **Available Ports:**
 
@@ -253,10 +252,10 @@ Label column is a port label on a physical switch.
 | E1/11 | 11 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/12 | 12 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/13 | 13 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/14 | 14 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/15 | 15 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/16 | 16 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/17 | 17 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/14 | 14 | Breakout | Ethernet1/14 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/15 | 15 | Breakout | Ethernet1/15 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/16 | 16 | Breakout | Ethernet1/16 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/17 | 17 | Breakout | Ethernet1/17 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/18 | 18 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/19 | 19 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/20 | 20 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
@@ -799,22 +798,22 @@ Label column is a port label on a physical switch.
 | E1/30  | 30    | SFP28-25G    | Ethernet29   | 3     | 25G     | 10G, 25G       |
 | E1/31  | 31    | SFP28-25G    | Ethernet30   | 3     | 25G     | 10G, 25G       |
 | E1/32  | 32    | SFP28-25G    | Ethernet31   | 3     | 25G     | 10G, 25G       |
-| E1/33  | 33    | SFP28-25G    | Ethernet32   | 3     | 25G     | 10G, 25G       |
-| E1/34  | 34    | SFP28-25G    | Ethernet33   | 3     | 25G     | 10G, 25G       |
-| E1/35  | 35    | SFP28-25G    | Ethernet34   | 3     | 25G     | 10G, 25G       |
-| E1/36  | 36    | SFP28-25G    | Ethernet35   | 3     | 25G     | 10G, 25G       |
+| E1/33  | 33    | SFP28-25G    | Ethernet32   | 4     | 25G     | 10G, 25G       |
+| E1/34  | 34    | SFP28-25G    | Ethernet33   | 4     | 25G     | 10G, 25G       |
+| E1/35  | 35    | SFP28-25G    | Ethernet34   | 4     | 25G     | 10G, 25G       |
+| E1/36  | 36    | SFP28-25G    | Ethernet35   | 4     | 25G     | 10G, 25G       |
 | E1/37  | 37    | SFP28-25G    | Ethernet36   | 4     | 25G     | 10G, 25G       |
 | E1/38  | 38    | SFP28-25G    | Ethernet37   | 4     | 25G     | 10G, 25G       |
 | E1/39  | 39    | SFP28-25G    | Ethernet38   | 4     | 25G     | 10G, 25G       |
 | E1/40  | 40    | SFP28-25G    | Ethernet39   | 4     | 25G     | 10G, 25G       |
-| E1/41  | 41    | SFP28-25G    | Ethernet40   | 4     | 25G     | 10G, 25G       |
-| E1/42  | 42    | SFP28-25G    | Ethernet41   | 4     | 25G     | 10G, 25G       |
-| E1/43  | 43    | SFP28-25G    | Ethernet42   | 4     | 25G     | 10G, 25G       |
-| E1/44  | 44    | SFP28-25G    | Ethernet43   | 4     | 25G     | 10G, 25G       |
-| E1/45  | 45    | SFP28-25G    | Ethernet44   | 4     | 25G     | 10G, 25G       |
-| E1/46  | 46    | SFP28-25G    | Ethernet45   | 4     | 25G     | 10G, 25G       |
-| E1/47  | 47    | SFP28-25G    | Ethernet46   | 4     | 25G     | 10G, 25G       |
-| E1/48  | 48    | SFP28-25G    | Ethernet47   | 4     | 25G     | 10G, 25G       |
+| E1/41  | 41    | SFP28-25G    | Ethernet40   | 5     | 25G     | 10G, 25G       |
+| E1/42  | 42    | SFP28-25G    | Ethernet41   | 5     | 25G     | 10G, 25G       |
+| E1/43  | 43    | SFP28-25G    | Ethernet42   | 5     | 25G     | 10G, 25G       |
+| E1/44  | 44    | SFP28-25G    | Ethernet43   | 5     | 25G     | 10G, 25G       |
+| E1/45  | 45    | SFP28-25G    | Ethernet44   | 5     | 25G     | 10G, 25G       |
+| E1/46  | 46    | SFP28-25G    | Ethernet45   | 5     | 25G     | 10G, 25G       |
+| E1/47  | 47    | SFP28-25G    | Ethernet46   | 5     | 25G     | 10G, 25G       |
+| E1/48  | 48    | SFP28-25G    | Ethernet47   | 5     | 25G     | 10G, 25G       |
 | E1/49  | 49    | QSFP28-100G  | Ethernet48  | 13    | 100G    | 100G           |
 | E1/50  | 50    | QSFP28-100G  | Ethernet49  | 13    | 100G    | 100G           |
 | E1/51  | 51    | QSFP28-100G  | Ethernet50  | 13    | 100G    | 100G           |
@@ -1251,5 +1250,7 @@ Label column is a port label on a physical switch.
 | E1/46 | 46 | Port Group | 12 | 25G | 10G, 25G |
 | E1/47 | 47 | Port Group | 12 | 25G | 10G, 25G |
 | E1/48 | 48 | Port Group | 12 | 25G | 10G, 25G |
+
+```
 
 ```
