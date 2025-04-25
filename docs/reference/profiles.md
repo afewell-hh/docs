@@ -312,15 +312,15 @@ Label column is a port label on a physical switch.
 | E1/23 | 23 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/24 | 24 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
 | E1/25 | 25 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/26 | 26 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/27 | 27 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/28 | 28 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/29 | 29 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/30 | 30 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/31 | 31 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/32 | 32 | Breakout |  | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
-| E1/33 | 33 | Direct |  | 10G | 1G, 10G |
-| E1/34 | 34 | Direct |  | 10G | 1G, 10G |
+| E1/26 | 26 | Breakout | Ethernet1/26 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/27 | 27 | Breakout | Ethernet1/27 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/28 | 28 | Breakout | Ethernet1/28 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/29 | 29 | Breakout | Ethernet1/29 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/30 | 30 | Breakout | Ethernet1/30 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/31 | 31 | Breakout | Ethernet1/31 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/32 | 32 | Breakout | Ethernet1/32 | - | 2x400G | 1x100G, 1x200G, 1x400G, 2x100G, 2x200G, 2x400G, 2x40G, 4x100G, 4x200G, 4x50G, 8x100G, 8x10G, 8x25G, 8x50G |
+| E1/33 | 33 | Direct | Ethernet1/33 | - | 10G | 1G, 10G |
+| E1/34 | 34 | Direct | Ethernet1/34 | - | 10G | 1G, 10G |
 
 **Port profile details:**
 
@@ -1250,6 +1250,10 @@ Label column is a port label on a physical switch.
 | E1/46 | 46 | Port Group | 12 | 25G | 10G, 25G |
 | E1/47 | 47 | Port Group | 12 | 25G | 10G, 25G |
 | E1/48 | 48 | Port Group | 12 | 25G | 10G, 25G |
+
+```
+
+```
 
 ```
 
