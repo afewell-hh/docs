@@ -1,11 +1,34 @@
+<!-- Diátaxis: Explanation -->
+
 # Overview
 
-This chapter gives an overview of the main features of Hedgehog Fabric and their usage:
+> **Learning Objectives**
+> By the end of this explanation, you will:
+> - Understand the core architectural concepts of Hedgehog Fabric
+> - Recognize the roles of switches, servers, connections, and VPCs
+> - See how major features interrelate within the fabric
 
-- [**Switches and Servers**](devices.md): Covers the foundational elements of the fabric, including switches and servers, and their configurations.
-- [**Connections**](connections.md): Describes the different types of network links, such as workload server connections, switch interconnects, and external peering links.
-- [**VPCs and Namespaces**](vpcs.md): Explains virtual private cloud configurations, subnet management, and peering mechanisms.
-- [**External Peering**](external.md): Details how to connect the fabric to external networks and services through border leaf peering.
-- [**Fabric Shrink/Expand**](shrink-expand.md): Guides users on adding, removing, or replacing switches within the fabric.
-- [**Switch Profiles and Port Naming**](profiles.md): Defines switch profiles, port naming conventions, and supported configurations.
-- [**Grafana Dashboards**](grafana.md): Provides insights into monitoring and visualization tools for tracking fabric performance and health.
+This chapter provides an architectural overview of Hedgehog Fabric and its main features. Use this as a conceptual map before diving into how-to guides, tutorials, or reference details.
+
+## Hedgehog Fabric Core Concepts
+
+- **Switches and Servers** ([details](devices.md))
+  - The foundational elements of the fabric, including supported hardware and virtual platforms, configuration models, and role assignments.
+- **Connections** ([details](connections.md))
+  - The logical and physical links between servers, switches, and external networks, including workload connections, switch interconnects, and external peering links.
+- **VPCs and Namespaces** ([details](vpcs.md))
+  - Virtual private cloud configurations, subnet management, isolation/restriction, and peering mechanisms.
+- **External Peering** ([details](external.md))
+  - Methods for connecting the fabric to outside networks and services, typically via border leaf peering.
+- **Fabric Shrink/Expand** ([details](shrink-expand.md))
+  - Procedures for adding, removing, or replacing switches and scaling the fabric.
+- **Switch Profiles and Port Naming** ([details](profiles.md))
+  - Definitions for switch profiles, port naming conventions, and supported hardware/software configurations.
+- **Grafana Dashboards** ([details](grafana.md))
+  - Monitoring and visualization tools for tracking fabric performance, health, and events.
+
+> **Tip:** Each section above links to a dedicated how-to or reference guide for actionable steps and configuration details.
+
+---
+
+> **Next:** [Connections](./connections.md)

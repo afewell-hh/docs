@@ -1,17 +1,23 @@
+<!-- Diátaxis: Reference -->
+
 # Switches and Servers
 
-All devices in a Hedgehog Fabric are divided into two groups: switches and servers, represented by the corresponding
-`Switch` and `Server` objects in the API. These objects are needed to define all of the participants of the Fabric and their
-roles in the Wiring Diagram, together with `Connection` objects (see [Connections](./connections.md)).
+> **Learning Objectives**
+> By the end of this reference, you will:
+> - Understand the structure and required fields for Switch and Server objects in Hedgehog
+> - Recognize how devices are modeled and referenced in the wiring diagram
+> - Identify key configuration options, roles, and grouping mechanisms
+
+All devices in a Hedgehog Fabric are divided into two groups: switches and servers, represented by the corresponding `Switch` and `Server` objects in the API. These objects define all participants in the Fabric and their roles in the Wiring Diagram, together with `Connection` objects (see [Connections](./connections.md)).
 
 ## Switches
 
-Switches are the main building blocks of the Fabric. They are represented by `Switch` objects in the API. These objects
-consist of basic metadata like name, description, role, serial, management port mac, as well as port group speeds, port breakouts, ASN,
-IP addresses, and more. Additionally, a `Switch` contains a reference to a `SwitchProfile` object that defines the switch
-model and capabilities. More details can be found in the [Switch Profiles and Port Naming](./profiles.md) section.
+Switches are the main building blocks of the Fabric. They are represented by `Switch` objects in the API, which consist of:
+- Metadata: name, description, role, serial, management port MAC
+- Configuration: port group speeds, port breakouts, ASN, IP addresses, protocol IP, VTEP IP, VLAN namespaces, groups
+- Reference to a `SwitchProfile` object defining the switch model and capabilities ([see profiles](./profiles.md))
 
-In order for the fabric to manage a switch the profile needs to include either the `serial` or `mac` need to be defined in the YAML doc.
+At least one of `serial` or `mac` must be defined in the YAML for management. Example:
 
 ```yaml
 apiVersion: wiring.githedgehog.com/v1beta1
@@ -20,34 +26,68 @@ metadata:
   name: s5248-01
   namespace: default
 spec:
-  boot: # at least one of the serial or mac needs to be defined
+  boot:
     serial: XYZPDQ1234
-    mac: 00:11:22:33:44:55 # Usually the first management port MAC address
-  profile: dell-s5248f-on # Mandatory reference to the SwitchProfile object defining the switch model and capabilities
-  asn: 65101 # ASN of the switch. User provided if exapanding the fabric.
+    mac: 00:11:22:33:44:55
+  profile: dell-s5248f-on
+  asn: 65101
   description: leaf-1
-  ip: 172.30.0.8/21 # Switch IP that will be accessible from the Control Node, if expanding the fabric, IP is user-supplied
-  portBreakouts: # Configures port breakouts for the switch, see the SwitchProfile for available options
+  ip: 172.30.0.8/21
+  portBreakouts:
     E1/55: 4x25G
-  portGroupSpeeds: # Configures port group speeds for the switch, see the SwitchProfile for available options
+  portGroupSpeeds:
     "1": 10G
     "2": 10G
-  portSpeeds: # Configures port speeds for the switch, see the SwitchProfile for available options
+  portSpeeds:
     E1/1: 25G
-  protocolIP: 172.30.11.100/32 # Used as BGP router ID
-  role: server-leaf # Role of the switch, one of server-leaf, border-leaf and mixed-leaf
-  vlanNamespaces: # Defines which VLANs could be used to attach servers
-  - default
+  protocolIP: 172.30.11.100/32
+  role: server-leaf
+  vlanNamespaces:
+    - default
   vtepIP: 172.30.12.100/32
-  groups: # Defines which groups the switch belongs to, by referring to SwitchGroup objects
-  - some-group
-  redundancy: # Optional field to define that switch belongs to the redundancy group
-    group: eslag-1 # Name of the redundancy group
-    type: eslag # Type of the redundancy group, one of mclag or eslag
-  enableAllPorts: true # Optional field to enable all ports on the switch by default
+  groups:
+    - some-group
+  redundancy:
+    group: eslag-1
+    type: eslag
+  enableAllPorts: true
 ```
 
-The `SwitchGroup` is just a marker at that point and doesn't have any configuration options.
+> <details>
+> <summary>Advanced: Redundancy and Grouping</summary>
+> - `groups` refers to `SwitchGroup` objects for logical grouping.
+> - `redundancy` defines membership in MCLAG or ESLAG redundancy groups.
+> - `enableAllPorts` enables all ports by default.
+> </details>
+
+## Servers
+
+Servers are represented by `Server` objects. These define workload nodes in the Fabric and support various roles and connection types. Example:
+
+```yaml
+apiVersion: wiring.githedgehog.com/v1beta1
+kind: Server
+metadata:
+  name: server-01
+  namespace: default
+spec:
+  mac: 00:aa:bb:cc:dd:ee
+  ip: 172.30.20.101/21
+  os: ubuntu-22.04
+  groups:
+    - workload-group
+  description: "Test workload server"
+```
+
+> <details>
+> <summary>Advanced: Server Groups and Metadata</summary>
+> - `groups` can be used for logical grouping and automation.
+> - `description` is free-form and aids inventory or automation.
+> </details>
+
+## SwitchGroup
+
+The `SwitchGroup` is a logical grouping object for switches. It currently acts as a marker and does not have configuration options, but is referenced in `Switch` objects and for advanced features (e.g., peering, redundancy).
 
 ```yaml
 apiVersion: wiring.githedgehog.com/v1beta1
@@ -60,18 +100,13 @@ spec: {}
 
 ## Redundancy Groups
 
-Redundancy groups are used to define the redundancy between switches. It's a regular `SwitchGroup` used by multiple
-switches and currently it could be MCLAG or ESLAG (EVPN MH / ESI). A switch can only belong to a single redundancy
-group.
+Redundancy groups are used to define the redundancy between switches. It's a regular `SwitchGroup` used by multiple switches and currently it could be MCLAG or ESLAG (EVPN MH / ESI). A switch can only belong to a single redundancy group.
 
-MCLAG is only supported for pairs of switches and ESLAG is supported for up to 4 switches. Multiple types of redundancy
-groups can be used in the fabric simultaneously.
+MCLAG is only supported for pairs of switches and ESLAG is supported for up to 4 switches. Multiple types of redundancy groups can be used in the fabric simultaneously.
 
-Connections with types `mclag` and `eslag` are used to define the servers connections to switches. They are only
-supported if the switch belongs to a redundancy group with the corresponding type.
+Connections with types `mclag` and `eslag` are used to define the servers connections to switches. They are only supported if the switch belongs to a redundancy group with the corresponding type.
 
-In order to define a MCLAG or ESLAG redundancy group, you need to create a `SwitchGroup` object and assign it to the
-switches using the `redundancy` field.
+In order to define a MCLAG or ESLAG redundancy group, you need to create a `SwitchGroup` object and assign it to the switches using the `redundancy` field.
 
 Example of switch configured for ESLAG:
 
@@ -119,19 +154,8 @@ spec:
   ...
 ```
 
-In case of MCLAG it's required to have a special connection with type `mclag-domain` that defines the peer and session
-links between switches. For more details, see [Connections](./connections.md).
+In case of MCLAG it's required to have a special connection with type `mclag-domain` that defines the peer and session links between switches. For more details, see [Connections](./connections.md).
 
-## Servers
+---
 
-Regular workload server:
-
-```yaml
-apiVersion: wiring.githedgehog.com/v1beta1
-kind: Server
-metadata:
-  name: server-1
-  namespace: default
-spec:
-  description: MH s5248-01/E1 s5248-02/E1
-```
+> **Next:** [Connections](./connections.md)

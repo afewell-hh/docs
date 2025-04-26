@@ -1,58 +1,60 @@
+<!-- Diátaxis: How-to Guide -->
+
 # Build Wiring Diagram
 
+> **Learning Objectives**
+> By the end of this how-to, you will:
+> - Understand the structure and purpose of a Hedgehog Fabric wiring diagram
+> - Assemble switch, fabric, and server connections using YAML
+> - Reference switch profiles, port naming, and redundancy groups in your design
+> - Validate and use your wiring diagram for automated provisioning
+
+---
 
 ## Overview
 
-A wiring diagram is a YAML file that is a digital representation of your
-network. You can find more YAML level details in the User Guide section [switch
-features and port naming](../user-guide/profiles.md) and the
-[api](../reference/api.md). It's mandatory for all switches to reference a
-`SwitchProfile` in the `spec.profile` of the `Switch` object. Only port naming
-defined by switch profiles could be used in the wiring diagram, NOS (or any
-other) port names aren't supported. An complete example wiring diagram is
-[below](build-wiring.md#sample-wiring-diagram).
+A wiring diagram is a YAML file representing your network topology. For YAML details, see [Switch Features and Port Naming](../user-guide/profiles.md) and the [API Reference](../reference/api.md). Every switch must reference a `SwitchProfile` in the `spec.profile` field. Only port names defined by switch profiles are valid in the wiring diagram—NOS or vendor port names are not supported. See the [sample wiring diagram](#sample-wiring-diagram) below.
 
-A good place to start building a wiring diagram is with the switch profiles.
-Start with the switches, then move onto the fabric links, and finally the
-server connections.
+Begin with switch profiles, then define switches, fabric links, and server connections.
 
 ### Sample Switch Configuration
-``` { .yaml .annotate linenums="1" }
+
+```yaml
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Switch
 metadata:
   name: ds3000-02
 spec:
-  boot: # Serial or MAC can be used
+  boot:
     serial: ABC123XYZ
-    mac: 34:AD:61:00:02:03 # Usually the first management port MAC address
+    mac: 34:AD:61:00:02:03
   role: server-leaf
   description: rack 5, aisle 3, RU 22
-  profile: celestica-ds3000 # (1)!
-  portBreakouts: # (2)!
+  profile: celestica-ds3000  # (1)!
+  portBreakouts:             # (2)!
     E1/1: 4x10G
     E1/2: 4x10G
     E1/17: 4x25G
     E1/18: 4x25G
     E1/32: 4x25G
-  redundancy: # (3)!
+  redundancy:                # (3)!
     group: eslag-1
     type: eslag
 ```
 
-1. See the [list](../reference/profiles.md) of profile names
-2. More information in the [User Guide](../user-guide/profiles.md#port-naming)
-3. Could be MCLAG, ESLAG or nothing, more details in [Redundancy
-   Groups](../user-guide/devices.md#redundancy-groups)
+1. See the [list of profile names](../reference/profiles.md)
+2. More info: [Port Naming](../user-guide/profiles.md#port-naming)
+3. See [Redundancy Groups](../user-guide/devices.md#redundancy-groups)
 
 ## Design Discussion
-This section is meant to help the reader understand how to assemble the primitives presented by the Fabric API into a functional fabric.
+
+This section explains how to assemble Fabric API primitives into a working fabric.
 
 ### VPC
 
-A VPC allows for isolation at layer 3. This is the main building block for users when creating their architecture. Hosts inside of a VPC belong to the same broadcast domain and can communicate with each other, if desired a single VPC can be configured with multiple broadcast domains. The hosts inside of a VPC will likely need to connect to other VPCs or the outside world. To communicate between two VPC a *peering* will need to be created. A VPC can be a logical separation of workloads. By separating these workloads additional controls are available. The logical separation doesn't have to be the traditional database, web, and compute layers it could be development teams who need isolation, it could be tenants inside of an office building, or any separation that allows for better control of the network. Once your VPCs are decided, the rest of the fabric will come together. With the VPCs decided traffic can be prioritized, security can be put into place, and the wiring can begin. The fabric allows for the VPC to span more than one switch, which provides great flexibility.
+A VPC allows for isolation at layer 3. This is the main building block for users when creating their architecture. Hosts inside of a VPC belong to the same broadcast domain and can communicate with each other. If desired, a single VPC can be configured with multiple broadcast domains. The hosts inside of a VPC will likely need to connect to other VPCs or the outside world. To communicate between two VPCs, a *peering* will need to be created. A VPC can be a logical separation of workloads. By separating these workloads, additional controls are available. The logical separation doesn't have to be the traditional database, web, and compute layers; it could be development teams who need isolation, it could be tenants inside of an office building, or any separation that allows for better control of the network. Once your VPCs are decided, the rest of the fabric will come together. With the VPCs decided, traffic can be prioritized, security can be put into place, and the wiring can begin. The fabric allows for the VPC to span more than one switch, which provides great flexibility.
 
-``` mermaid
+```mermaid
 graph TD
     L1([Leaf 1])
     L2([Leaf 2])
@@ -73,6 +75,7 @@ graph TD
     S3
     end
 ```
+
 ### Connection
 
 A connection represents the physical wires in your data center. They connect switches to other switches or switches to servers.
@@ -86,7 +89,7 @@ A server connection is a connection used to connect servers to the fabric. The f
 - *MCLAG* -  Two cables going to two different switches, also called dual homing. The switches will need a fabric link between them.
 - *ESLAG* - Two to four cables going to different switches, also called multi-homing. If four links are used there will need to be four switches connected to a single server with four NIC ports.
 
-``` mermaid
+```mermaid
 graph TD
     S1([Spine 1])
     S2([Spine 2])
@@ -135,16 +138,16 @@ graph TD
     end
     
 ```
+
 #### Fabric Connections
 
 Fabric connections serve as connections between switches, they form the fabric of the network.
-
 
 ### VPC Peering
 
 VPCs need VPC Peerings to talk to each other. VPC Peerings come in two varieties: local and remote.
 
-``` mermaid
+```mermaid
 graph TD
     S1([Spine 1])
     S2([Spine 2])
@@ -173,9 +176,9 @@ graph TD
 
 #### Local VPC Peering
 
-When there is no dedicated border/peering switch available in the fabric we can use local VPC peering. This kind of peering tries sends traffic between the two VPC's on the switch where either of the VPC's has workloads attached. Due to limitation in the Sonic network operating system this kind of peering bandwidth is limited to the number of VPC loopbacks you have selected while initializing the fabric. Traffic between the VPCs will use the loopback interface, the bandwidth of this connection will be equal to the bandwidth of port used in the loopback.
+When there is no dedicated border/peering switch available in the fabric, we can use local VPC peering. This kind of peering tries sends traffic between the two VPC's on the switch where either of the VPC's has workloads attached. Due to limitation in the Sonic network operating system, this kind of peering bandwidth is limited to the number of VPC loopbacks you have selected while initializing the fabric. Traffic between the VPCs will use the loopback interface, the bandwidth of this connection will be equal to the bandwidth of port used in the loopback.
 
-``` mermaid
+```mermaid
 graph TD
 
     L1([Leaf 1])
@@ -199,14 +202,14 @@ graph TD
     S4
     end
 ```
-The dotted line in the diagram shows the traffic flow for local peering. The traffic originates in VPC 2, travels to the switch, travels out the first loopback port, into the second loopback port, and finally out the port destined for VPC 1.
 
+The dotted line in the diagram shows the traffic flow for local peering. The traffic originates in VPC 2, travels to the switch, travels out the first loopback port, into the second loopback port, and finally out the port destined for VPC 1.
 
 #### Remote VPC Peering
 
-Remote Peering is used when you need a high bandwidth connection between the VPCs, you will dedicate a switch to the peering traffic. This is either done on the border leaf or on a switch where either of the VPC's are not present. This kind of peering allows peer traffic between different VPC's at line rate and is only limited by fabric bandwidth. Remote peering introduces a few additional hops in the traffic and may cause a small increase in latency.
+Remote Peering is used when you need a high bandwidth connection between the VPCs. You will dedicate a switch to the peering traffic. This is either done on the border leaf or on a switch where either of the VPC's are not present. This kind of peering allows peer traffic between different VPC's at line rate and is only limited by fabric bandwidth. Remote peering introduces a few additional hops in the traffic and may cause a small increase in latency.
 
-``` mermaid
+```mermaid
 graph TD
     S1([Spine 1])
     S2([Spine 2])
@@ -240,7 +243,8 @@ graph TD
     TS4
     end
 ```
-The dotted line in the diagram shows the traffic flow for remote peering. The traffic could take a different path because of ECMP. It is important to note that Leaf 3 cannot have any servers from VPC 1 or VPC 2 on it, but it can have a  different VPC attached to it.
+
+The dotted line in the diagram shows the traffic flow for remote peering. The traffic could take a different path because of ECMP. It is important to note that Leaf 3 cannot have any servers from VPC 1 or VPC 2 on it, but it can have a different VPC attached to it.
 
 #### VPC Loopback
 
@@ -248,17 +252,9 @@ A VPC loopback is a physical cable with both ends plugged into the same switch, 
 
 ## Sample Wiring Diagram
 
-The YAML listing below shows a complete wiring diagram. It illustrates how switches
-from a single vendor can be arranged to form a fabric. There are no IP
-addresses or ASN numbers in this listing, the `hhfab build` step creates those as part
-of creating the fabric. To physically connect this topology, 16 cables are
-needed for the fabric links, 8 cables are needed for the loop back connections.
-Additional cables are needed to connect servers into the fabric. 
+The YAML listing below shows a complete wiring diagram. It illustrates how switches from a single vendor can be arranged to form a fabric. There are no IP addresses or ASN numbers in this listing; the `hhfab build` step creates those as part of creating the fabric. To physically connect this topology, 16 cables are needed for the fabric links, 8 cables are needed for the loop back connections. Additional cables are needed to connect servers into the fabric.
 
-``` {.yaml .annotate linenums="1" title="wiring_diagram.yaml"}
-#
-# VLANNamespaceList
-#
+```yaml
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: VLANNamespace
 metadata:
@@ -267,9 +263,7 @@ spec:
   ranges:
   - from: 1000
     to: 2999
-#
-# IPv4NamespaceList
-#
+
 ---
 apiVersion: vpc.githedgehog.com/v1beta1
 kind: IPv4Namespace
@@ -278,18 +272,14 @@ metadata:
 spec:
   subnets:
   - 10.0.0.0/16
-#
-# SwitchGroupList
-#
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: SwitchGroup
 metadata:
   name: empty
 spec: {}
-#
-# SwitchList
-#
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Switch
@@ -299,9 +289,10 @@ spec:
   boot:
     mac: 0c:20:12:ff:00:00 # CHANGE ME
   description: leaf-01
-  profile:  celestica-ds3000
+  profile: celestica-ds3000
   redundancy: {}
   role: server-leaf
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Switch
@@ -314,6 +305,7 @@ spec:
   profile: celestica-ds3000
   redundancy: {}
   role: server-leaf
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Switch
@@ -326,6 +318,7 @@ spec:
   profile: celestica-ds3000
   redundancy: {}
   role: server-leaf
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Switch
@@ -338,6 +331,7 @@ spec:
   profile: celestica-ds3000
   redundancy: {}
   role: server-leaf
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Switch
@@ -353,6 +347,7 @@ spec:
     E1/2: 4x100G
   redundancy: {}
   role: spine
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Switch
@@ -368,9 +363,7 @@ spec:
     E1/2: 4x100G
   redundancy: {}
   role: spine
-#
-# ConnectionList
-#
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -387,6 +380,7 @@ spec:
         port: leaf-01/E1/14
       switch2:
         port: leaf-01/E1/15
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -403,6 +397,7 @@ spec:
         port: leaf-02/E1/15
       switch2:
         port: leaf-02/E1/16
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -419,6 +414,7 @@ spec:
         port: leaf-03/E1/10
       switch2:
         port: leaf-03/E1/11
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -435,6 +431,7 @@ spec:
         port: leaf-04/E1/11
       switch2:
         port: leaf-04/E1/12
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -451,6 +448,7 @@ spec:
         port: leaf-01/E1/9
       spine:
         port: spine-01/E1/2/1
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -467,6 +465,7 @@ spec:
         port: leaf-02/E1/10
       spine:
         port: spine-01/E1/2/2
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -483,6 +482,7 @@ spec:
         port: leaf-03/E1/5
       spine:
         port: spine-01/E1/2/3
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -499,6 +499,7 @@ spec:
         port: leaf-04/E1/6
       spine:
         port: spine-01/E1/2/4
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -515,6 +516,7 @@ spec:
         port: leaf-01/E1/11
       spine:
         port: spine-02/E1/2/1
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -531,6 +533,7 @@ spec:
         port: leaf-02/E1/12
       spine:
         port: spine-02/E1/2/2
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -547,6 +550,7 @@ spec:
         port: leaf-03/E1/7
       spine:
         port: spine-02/E1/2/3
+
 ---
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Connection
@@ -564,3 +568,23 @@ spec:
       spine:
         port: spine-02/E1/2/4
 ```
+
+## Validation & Usage
+
+- Validate your wiring diagram with:
+
+    ```sh
+    hhfab validate wiring.yaml
+    ```
+- Use the validated wiring diagram as input to `hhfab init` and subsequent provisioning steps.
+
+## See Also
+
+- [Switch Profiles](../reference/profiles.md)
+- [Connections](../user-guide/connections.md)
+- [System Requirements](./requirements.md)
+- [Install Hedgehog Fabric](./install.md)
+
+## Next
+
+[Configuration](./config.md)

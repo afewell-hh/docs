@@ -1,108 +1,92 @@
+<!-- Diátaxis: How-to Guide -->
+
 # Fabric Shrink/Expand
 
-This section provides a brief overview of how to add or remove switches within the fabric using Hedgehog Fabric API, and
-how to manage connections between them.
+> **Doc Type:** How-to Guide
+> **Learning Objectives**
+> By the end of this guide, you will:
+> - Add new switches to an existing Hedgehog Fabric
+> - Remove switches and update fabric topology safely
+> - Use YAML and kubectl to manage fabric expansion and contraction
+> - Understand prerequisites for redundancy and group membership
 
-Manipulating API objects is done with the assumption that target devices are correctly cabled and connected.
+This guide explains how to add or remove switches within the fabric using the Hedgehog Fabric API, and how to manage connections between them.
 
-This article uses terms that can be found in the [Hedgehog Concepts](../concepts/overview.md), the [User
-Guide](overview.md) documentation, and the [Fabric API](../reference/api.md) reference.
+> **Note:** Manipulating API objects assumes that target devices are correctly cabled and connected.
 
-### Add a switch to the existing fabric
+See also: [Hedgehog Concepts](../concepts/overview.md), [User Guide](overview.md), and [Fabric API Reference](../reference/api.md).
 
-In order to be added to the Hedgehog Fabric, a switch should have a corresponding `Switch` object. An example on how to define
-this object is available in the [User Guide](devices.md). If the switch is
-being added to an existing fabric the user needs to supply the ASN, and IPv4
-address for the switch. For a leaf switch, increment the largest ASN by one. If
-a spine is being added, it shares the same ASN as the existing spines. For an
-IPv4 address increment the largest IP by one, keep the same netmask.
+## 1. Add a Switch to the Fabric
 
-!!! note
-    If the`Switch` will be used in `ESLAG` or `MCLAG` groups, appropriate groups should exist. Redundancy groups should
-    be specified in the `Switch` object before creation.
+To add a switch:
+1. Ensure the switch is physically cabled and powered on.
+2. Create a corresponding `Switch` object. (See [Devices](devices.md) for details.)
+3. For a new leaf, increment the largest ASN and IPv4 address by one. For a new spine, use the same ASN as existing spines and increment the IP.
+4. If the switch will join an ESLAG or MCLAG group, ensure the group exists and is referenced in the `Switch` object.
 
-#### Expanding Example
+**Example: Expanding the Fabric**
 
-A good place to start expanding the fabric is to extract the YAML configuration
-for a switch in the role (spine or leaf) that matches the switch to be added.
-A good starting point is to take the highest numbered or most recently added
-switch of the matching role and increment the IP addresses and numbers by 1.
+Extract the configuration of an existing switch of the same role:
 
-1. on a control node: `kubectl get switch/leaf-05 -o yaml > new_switch.yaml`
-1. Edit new resulting YAML file
+```bash
+kubectl get switch/leaf-05 -o yaml > new_switch.yaml
+```
 
-``` {yaml annotate title='new_switch.yaml' linenums='1'}
+Edit the resulting YAML file, incrementing the `asn`, `name`, and `ip` fields as appropriate. Example:
+
+```yaml
 apiVersion: wiring.githedgehog.com/v1beta1
 kind: Switch
 metadata:
-  creationTimestamp: "2025-04-03T20:44:26Z"
-  generation: 1
-  labels:
-    fabric.githedgehog.com/profile: vs
-    vlanns.fabric.githedgehog.com/default: "true"
-  name: leaf-05
-  namespace: default
-  resourceVersion: "3557"
-  uid: 04de1762-3c51-4a2d-a9ce-5882494a81c3
+  name: leaf-06
 spec:
-  asn: 65104
+  asn: 65105
   boot:
-    mac: 0c:20:12:ff:04:00
-  description: VS-05
-  ip: 172.30.0.12/21
-  profile: vs
-  protocolIP: 172.30.8.6/32
-  redundancy: {}
-  role: server-leaf
-  vlanNamespaces:
-  - default
-  vtepIP: 172.30.12.3/32
+    mac: 0c:20:12:ff:06:00
+  mgmt:
+    ip: 10.0.0.106/24
+  # ... other fields copied from template
 ```
-1. The file contains extra information as the switch is currently deployed. To add a new switch remove the unneeded information.
-``` {yaml annotate title='new_switch.yaml' linenums='1'}
-apiVersion: wiring.githedgehog.com/v1beta1
-kind: Switch
-metadata:
-  name: leaf-05 # CHANGE ME
-  namespace: default
-spec:
-  asn: 65104 # CHANGE ME
-  boot:
-    mac: 0c:20:12:ff:04:00 # CHANGE ME
-  description:  row 5, rack c, u 25 # CHANGE ME
-  ip: 172.30.0.12/21 # INCREMENT / CHANGE ME
-  profile: ds4000 # MATCH TO YOUR NEEDS
-  protocolIP: 172.30.8.6/32 # INCREMENT / CHANGE ME
-  redundancy: {} # MATCH TO YOUR NEEDS
-  role: server-leaf # MATCH TO YOUR NEEDS
-  vtepIP: 172.30.12.4/32 # INCREMENT / CHANGE ME
+
+Apply the new object:
+```bash
+kubectl apply -f new_switch.yaml
 ```
-1. On the control node: `kubectl apply -f new_switch.yaml`
 
-  * The file can be used to remove the new switch, `kubectl delete -f new_switch.yaml` if needed
+> <details>
+> <summary>Advanced: Adding to Redundancy Groups</summary>
+> - Update the `groups` field in the `Switch` object to add ESLAG/MCLAG membership.
+> - Ensure the group exists before referencing it.
+> </details>
 
-After the `Switch` object has been created, you can define and create dedicated device `Connections`. The types of the
-connections may differ based on the `Switch` role given to the device. For more details, refer to [Connections
-section](connections.md).
+## 2. Remove a Switch from the Fabric
 
-!!! note
-    Switch devices need to be booted in `ONIE` installation mode to install SONiC OS and configure the Fabric
-    Agent.
+To remove a switch:
+1. Ensure the switch is not part of any required redundancy group, or update group membership accordingly.
+2. Delete the `Switch` object:
+   ```bash
+   kubectl delete switch/leaf-06
+   ```
+3. Remove or update any related `Connection` or group objects as needed.
 
-Ensure the management port of the switch is connected to fabric management network.
+> **Tip:** Always check for dependencies (e.g., VPCs, groups) before deleting a switch.
 
-### Remove a switch from the existing fabric
+## 3. Replace a Switch in the Fabric
 
-Before you decommission a switch from the Hedgehog Fabric, several preliminary steps are necessary.
+To replace a switch:
+1. Edit the existing `Switch` object to update the `MAC` address or `Serial` number of the new hardware.
+2. Reinstall the switch, following the boot `ONIE` process used when it was first added to the fabric.
 
-* If the `Switch` is a `Leaf` switch (including `Mixed` and `Border` leaf configurations), remove all `VPCAttachments` bound to all switches `Connections`.
-* If the `Switch` was used for `ExternalPeering`, remove all `ExternalAttachment` objects that are bound to the `Connections` of the `Switch`.
-* Remove all connections of the `Switch`.
-* At last, remove the `Switch` and `Agent` objects.
+> **Note:** This process does not require removing and re-adding the switch.
 
-### Replace a switch from the existing fabric
+---
 
-To replace a switch in the fabric, you do not need to remove and re-add it. Instead:
+> **Next:** [Connections](./connections.md)
 
-* Edit the existing switch object to update the `MAC` address or `Serial` number of the new hardware.
-* Reinstall the switch, following the boot `ONIE` process used when it was first added to the fabric.
+> **Related Topics:**
+> - [Hedgehog Concepts](../concepts/overview.md)
+> - [User Guide](overview.md)
+> - [Fabric API Reference](../reference/api.md)
+> - [Devices](devices.md)
+
+> **Last Updated:** [Insert Date]

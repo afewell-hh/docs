@@ -1,5 +1,19 @@
 # Documentation
 
+## Prerequisites for Local Preview
+
+Before previewing or editing documentation, you must have:
+
+- **Docker** (or compatible container engine) installed and running
+- The [`just`](https://just.systems) command-line tool installed
+- Credentials to access Hedgehog's [GitHub Container Registry (GHCR)](../getting-started/download.md)
+
+> The `just serve` command runs the documentation site in a Docker container, ensuring your preview matches production and CI/CD. The container image is pulled from GHCR, so authentication is required. See the [How-to Guide](../how-to/preview-docs-locally.md) for step-by-step setup and troubleshooting.
+
+## How to Preview Docs Locally
+
+See the [How-to Guide: Preview Documentation Locally](../how-to/preview-docs-locally.md) for complete instructions and troubleshooting tips.
+
 ## Getting started
 
 This documentation is done using [MkDocs](https://www.mkdocs.org) with multiple plugins enabled. It's based on the Markdown, you can find basic syntax overview [here](https://www.markdownguide.org/basic-syntax/).
@@ -204,4 +218,3 @@ sequenceDiagram
   John-->>Alice: Great!
   John->>Bob: How about you?
   Bob-->>John: Jolly good!
-```

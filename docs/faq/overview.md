@@ -1,4 +1,12 @@
+<!-- Diátaxis: Reference -->
+
 # Frequently Asked Questions (FAQ)
+
+> **Learning Objectives**
+> By the end of this reference, you will:
+> - Understand the core concepts of Hedgehog Fabric and its architecture
+> - Compare spine-leaf with traditional core-access-aggregation networks
+> - Understand VPCs, VRFs, and their configuration in Hedgehog
 
 ## What is the Hedgehog Fabric?
 
@@ -33,7 +41,6 @@ graph TD
     L2 ---- WS2
     L3 ---- WS3
     L4 ---- WS4
-
 ```
 
 ### Core Access Aggregation Diagram
@@ -65,7 +72,6 @@ graph TD
     A1 ---- WS1
     A2 ---- WS2
     A3 ---- WS3
-
 ```
 
 ## What does it mean to manage my network with Kubernetes?
@@ -79,3 +85,7 @@ With the Hedgehog Fabric, the same principles apply to managing network resource
 ## What is a Virtual Private Cloud (VPC)?
 
 A VPC provides [layer 3](https://en.wikipedia.org/wiki/Network_layer) logical isolation inside of a network. To isolate the servers, a [VRF](https://en.wikipedia.org/wiki/Virtual_routing_and_forwarding) is used. A VRF allows for multiple routing tables to exist at the same time on a switch. Each VPC is isolated from the others because there is simply no route between them.
+
+---
+
+> **Next:** [Troubleshooting](../troubleshooting/overview.md)

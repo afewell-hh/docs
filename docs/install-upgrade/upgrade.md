@@ -1,52 +1,78 @@
-# Upgrade
+<!-- Diátaxis: How-to Guide -->
 
-## Upgrades from Beta-1 onwards
+# Upgrade Hedgehog Fabric
 
-Starting with Beta-1 release and onwards, the upgrade process is more streamlined and fully automated. The control node
-is upgraded in place and the agents/switches is upgraded using the control node.
+> **Learning Objectives**
+> By the end of this how-to, you will:
+> - Prepare for and execute an in-place upgrade of Hedgehog Fabric (control node and switches)
+> - Generate and apply a self-contained upgrade package
+> - Validate a successful upgrade and know how to troubleshoot
 
-In order to apply the upgrade, use the following instructions:
+---
 
-1. Generate the current configuration of your fabric:
-    1. On a control node: `kubectl hhfab config export > fab.yaml`
-1. On the node with the new version of `hhfab`:
-    1. `hhfab init -c fab.yaml -f`, using the fab.yaml from the previous step
-    1. run `hhfab build --mode=manual` to generate fully self-contained
-       (airgap) upgrade package; for a control node named `control-1`, it will
-       be `result/control--control-1--install.tgz`
-1. upload it to the control node (e.g. using `scp`)
-1. unpack and run `hhfab-recipe upgrade` from the resulting directory
+## Upgrades from Beta-1 Onwards
 
-```bash
-tar xzf control--control-1--install.tgz
-cd control--control-1--install
-sudo ./hhfab-recipe upgrade
-```
+Starting with Beta-1, the upgrade process is streamlined and fully automated. The control node is upgraded in place, and agents/switches are upgraded using the control node.
 
-The upgrade will do all necessary steps to upgrade the control node and the
-agents/switches. The upgrade process will prompt the user to **reboot**, as part of
-upgrading Flatcar on the control node. To validate that the version has been deployed,
-run `kubectl -n fab get fab/default -o=jsonpath='{.status.versions.fabricator.controller}'`
-and compare to the fabricator version in the release notes.
+### Step-by-Step Upgrade Procedure
 
-Upgrade process is idempotent and can be run multiple times without any issues.
+1. **Export your current fabric configuration:**
 
-Check the [release notes](../release-notes/index.md) for your version to see if a [SONiC
-Upgrade](#upgrade-sonic) is available.
+    ```sh
+    kubectl hhfab config export > fab.yaml
+    ```
+
+2. **On the node with the new version of `hhfab`:**
+
+    ```sh
+    hhfab init -c fab.yaml -f
+    hhfab build --mode=manual
+    # This generates result/control--control-1--install.tgz
+    ```
+
+3. **Upload the upgrade package to the control node:**
+
+    ```sh
+    scp result/control--control-1--install.tgz <user>@<control-node>:/tmp/
+    ```
+
+4. **Unpack and run the upgrade:**
+
+    ```sh
+    tar xzf control--control-1--install.tgz
+    cd control--control-1--install
+    sudo ./hhfab-recipe upgrade
+    ```
+
+    - The upgrade will prompt for a reboot as part of upgrading Flatcar on the control node.
+
+5. **Validate the upgrade:**
+
+    ```sh
+    kubectl -n fab get fab/default -o=jsonpath='{.status.versions.fabricator.controller}'
+    # Compare the version to the release notes
+    ```
+
+- The upgrade process is idempotent and can be run multiple times safely.
+- See [Release Notes](../release-notes/index.md) for details on your version and [SONiC Upgrade](#upgrade-sonic) if applicable.
+
+---
 
 ## Upgrade from Alpha-7 to Beta-1
 
-### Control Node
-
-Ensure the hardware that is to be used for the control node meets the [system requirements](requirements.md#control-node). The upgrade process is destructive of the host, so ensure all data needed is removed from the selected server before the upgrade is started.
+### Prerequisites
+- Ensure hardware meets [system requirements](requirements.md#control-node).
+- The upgrade is destructive—back up all needed data from the server.
 
 ### Management Network
+- Beta-1 uses RJ-45 management ports of switches (not front panel ports).
+- A dedicated management network must be in place and cabled before Beta-1 installation.
+- The control node runs a DHCP server on this network and must be the sole DHCP server.
+- Do not co-mingle other equipment/services on this network.
 
-Beta-1 uses the RJ-45 management ports of the switches instead of front panel ports. A simple management network will need to be in place and cabled before the install of Beta-1. The control node will run a DHCP server on this network and must be the sole DHCP server. Do not co-mingle other services or equipment on this network, it is for the exclusive use of the control node and switches.
-
-### Install Switch Vendor ONIE
-
-Beta-1 uses the switch vendor ONIE for installation of the NOS. The latest vendor provided version of ONIE is recommended to be installed. Hedgehog ONIE **must not** be used.
+### Switch ONIE Installation
+- Beta-1 uses the switch vendor ONIE for NOS installation.
+- Install the latest vendor-provided ONIE (do **not** use Hedgehog ONIE).
 
 ### Changes to the Wiring Diagram
 
@@ -82,3 +108,12 @@ switch reinstall --name switch-name`. The switch will be gracefully shutdown,
 and reboot into the `ONIE` boot environment for reinstallation. After the
 switch boots the hedgehog agent will automatically restore the configuration
 and traffic will resume without user intervention. 
+
+> **See Also:**
+> - [System Requirements](./requirements.md)
+> - [Install Hedgehog Fabric](./install.md)
+> - [Release Notes](../release-notes/index.md)
+
+---
+
+> **Next:** [Build Wiring](./build-wiring.md)

@@ -1,37 +1,46 @@
-# Release notes
+<!-- Diátaxis: Reference -->
 
-!!! note
-    Please consult [this page](../known-limitations/known-limitations.md) for a list of current limitations
-    of the Fabric. Unless otherwise stated, these issues affect all the latest versions of Fabric.
+# Release Notes
+
+> **Learning Objectives**
+> By the end of this reference, you will:
+> - Track Hedgehog Fabric features and changes by release
+> - Identify new device support, tools, and upgrade requirements
+> - Locate related upgrade, installation, and known limitations documentation
+
+> **Note:** For current limitations, see [Known Limitations](../known-limitations/known-limitations.md). Unless otherwise stated, these issues affect all the latest versions of Fabric.
+
+---
 
 ## 25.01
 
 ### Highlights
 
-- Broadcom SONiC 4.4.2 support (see [upgrade
-  SONiC](../install-upgrade/upgrade.md#upgrade-sonic)) for instructions
+- Broadcom SONiC 4.4.2 support ([Upgrade SONiC](../install-upgrade/upgrade.md#upgrade-sonic))
 - Support for Celestica DS4101 as a spine
-- Fabric agent is periodically enforcing the switch configuration
-- All nodes (e.g. control node) and switches are automatically configured to use NTP server from the control node
-- User can choose to enable all switch ports by default by setting `enableAllPorts` to `true` on the Switch object
-- Control node OS (Flatcar) and K8s are now automatically upgraded
+- Fabric agent periodically enforces switch configuration
+- All nodes (including control node) and switches are auto-configured to use NTP server from the control node
+- User can enable all switch ports by default by setting `enableAllPorts: true` on the Switch object
+- Control node OS (Flatcar) and Kubernetes are now automatically upgraded
 
 ### Tools
 
-- `kubectl fabric inspect` now supports LLDP and BGP neighbors inspection
-    - it shows expected and actual values observed on a switches
-    - use `--strict` flag to make inspect fail if expected neighbors are not matching
-- `kubectl fabric switch reboot` is more reliable now and we'll retry if it fails
-- `kubectl fabric switch reinstall` now handles ONIE grub as well and reboots switch into ONIE NOS Install mode
-- `hhfab diagram` can now generate Draw.io, Graphviz (dot) and Mermaid diagrams
+- `kubectl fabric inspect` now supports LLDP and BGP neighbor inspection
+    - Shows expected and actual values observed on switches
+    - Use `--strict` flag to make inspect fail if expected neighbors do not match
+- `kubectl fabric switch reboot` is now more reliable and will retry if it fails
+- `kubectl fabric switch reinstall` now handles ONIE grub and reboots switch into ONIE NOS Install mode
+- `hhfab diagram` can now generate Draw.io, Graphviz (dot), and Mermaid diagrams
 
-### Software versions
+### Software Versions
 
 - fabricator/hhfab: v0.36.1
 - fabric: v0.71.6
 - broadcom sonic: 4.4.2
 - flatcar: v4152.2.0
 - k8s (k3s): v1.32.1-k3s1
+
+---
 
 ## 24.09
 
@@ -42,21 +51,22 @@
 ### Fabric Lifecycle Management
 
 - Installer ISO builder for zero-touch control node installation
-- CLI for exporting Wiring Diagram
-- CLI for exporting Fabricator configs
+- CLI for exporting Wiring Diagram and Fabricator configs
 - Automated update mechanism from B1 release, including airgap support
 
-### Software versions
+### Software Versions
 
-- fabricator/hhfab: v0.32.1
-- fabric: v0.58.0
-- broadcom sonic: 4.4.0
-- flatcar: v4081.2.0
-- k8s (k3s): v1.31.1-k3s1
+- fabricator/hhfab: v0.34.0
+- fabric: v0.67.0
+- broadcom sonic: 4.3.2
+- flatcar: v3738.2.1
+- k8s (k3s): v1.28.2-k3s1
+
+---
 
 ## Beta-1
 
-### Device support
+### Device Support
 
 - Celestica DS4000 as a spine
 
@@ -64,11 +74,11 @@
 
 - Broadcom SONiC 4.4.0 support
 
-### Fabric provisioning, management
+### Fabric Provisioning, Management
 
 - Out-of-band management network connectivity
 - Deprecated support for in-band management network connectivity, chain boot, and front-panel boot until further notice
-- Automatic zero touch switch provisioning [ ZTP ] is based on the serial number or the first management interface MAC address
+- Automatic zero-touch switch provisioning [ZTP] is based on the serial number or the first management interface MAC address
 - Full support for airgap installations and upgrades by default
 - Self-contained USB image generation for control node installation
 - Automated in-place upgrades for control node(s) moving forward
@@ -77,6 +87,8 @@
 
 - API version v1beta1
 - Guaranteed backward compatibility moving forward
+
+---
 
 ## Alpha-7
 
@@ -134,15 +146,7 @@ CLI commands are intended to navigate fabric configuration and state and allow i
 - MAC Address (incl. switch ports and DHCP leases)
 - Access between pair of IPs, Server names or VPCSubnets (everything except external IPs will be translated to VPCSubnets)
 
-# Observability
-
-- Example Grafana Dashboards [added to the docs](../user-guide/grafana.md)
-- Syslog (`/var/log/syslog`) is now could be collected from all switches and forwarded to Loki targets
-
-# Bug Fixes
-
-- Fixed: Restricted subnet isn't accessible from other subnets of the same VPC
-
+---
 
 ## Alpha-6
 
@@ -197,6 +201,7 @@ and managed by the Fabric
 * DHCP service assigning IP multiple times if restarted in between
 * Remote peering was configured as a local
 
+---
 
 ## Alpha-5
 
@@ -222,6 +227,8 @@ and managed by the Fabric
 * Native VLAN support for server-facing connections
 * Extended wiring validation at hhfab init/build time
 * External peering failover in case of using remote peering on the same switches as external connectivity
+
+---
 
 ## Alpha-4
 
@@ -274,7 +281,7 @@ and managed by the Fabric
     * Issue: Detaching ExternalPeering may cause VPCPeering on the Border Leaf group to stop working
     * Workaround: VPCPeering on the Border Leaf group should be recreated
 
-
+---
 
 ## Alpha-3
 
@@ -312,6 +319,7 @@ and managed by the Fabric
 ### DHCP Relay to 3rd party DHCP service
 Support for 3rd party DHCP server (DHCP Relay config) through the API
 
+---
 
 ## Alpha-2
 
@@ -468,6 +476,7 @@ To enable local inter-vpc peering that allows routing of traffic between VPCs, l
 * if VPC peers with external, it can only be remotely peered with on the same switches that have a connection to that external (by design)
 * the server-facing connection object is immutable as it’s very easy to get into a deadlock, re-create to change it (A3+)
 
+---
 
 ## Alpha-1
 
@@ -527,3 +536,14 @@ To enable local inter-vpc peering that allows routing of traffic between VPCs, l
     * K3s: v1.27.4-k3s1
     * Zot: v1.4.3
     * SONiC: Broadcom Enterprise Base 4.1.1
+
+---
+
+> **See Also:**
+> - [Upgrade Instructions](../install-upgrade/upgrade.md)
+> - [Known Limitations](../known-limitations/known-limitations.md)
+> - [Device Support](../reference/supported-devices.md)
+
+---
+
+> **Next:** [Install & Upgrade Requirements](../install-upgrade/requirements.md)

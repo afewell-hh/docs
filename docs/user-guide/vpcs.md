@@ -1,9 +1,18 @@
+<!-- Diátaxis: How-to Guide -->
+
 # VPCs and Namespaces
 
-## VPC
+> **Learning Objectives**
+> By the end of this guide, you will:
+> - Understand how to define and configure VPCs in Hedgehog
+> - Create subnets, assign VLANs, and configure DHCP options
+> - Attach VPCs to devices and manage isolation/restriction settings
 
-A Virtual Private Cloud (VPC) is similar to a public cloud VPC. It provides an isolated private network with support for multiple subnets,
-each with user-defined VLANs and optional DHCP services.
+A Virtual Private Cloud (VPC) in Hedgehog provides an isolated private network with support for multiple subnets, user-defined VLANs, and optional DHCP services. This guide shows how to define, configure, and attach VPCs using YAML manifests.
+
+## 1. Define a VPC
+
+Create a VPC manifest file (e.g., `vpc-1.yaml`):
 
 ```yaml
 apiVersion: vpc.githedgehog.com/v1beta1
@@ -14,104 +23,109 @@ metadata:
 spec:
   ipv4Namespace: default # Limits which subnets can the VPC use to guarantee non-overlapping IPv4 ranges
   vlanNamespace: default # Limits which Vlan Ids can the VPC use to guarantee non-overlapping VLANs
-
   defaultIsolated: true # Sets default behavior for the current VPC subnets to be isolated
   defaultRestricted: true # Sets default behavior for the current VPC subnets to be restricted
-
   subnets:
-    default: # Each subnet is named, "default" subnet isn't required, but actively used by CLI
+    default:
       dhcp:
-        enable: true # On-demand DHCP server
-        range: # Optionally, start/end range could be specified, otherwise all available IPs are used
+        enable: true
+        range:
           start: 10.10.1.10
           end: 10.10.1.99
-        options: # Optional, additional DHCP options to enable for DHCP server, only available when enable is true
-          pxeURL: tftp://10.10.10.99/bootfilename # PXEURL (optional) to identify the PXE server to use to boot hosts; HTTP query strings are not supported
-          dnsServers: # (optional) configure DNS servers
+        options:
+          pxeURL: tftp://10.10.10.99/bootfilename
+          dnsServers:
             - 1.1.1.1
-          timeServers: # (optional) configure Time (NTP) Servers
+          timeServers:
             - 1.1.1.1
-          interfaceMTU: 1500 # (optional) configure the MTU (default is 9036); doesn't affect the actual MTU of the switch interfaces
-      subnet: 10.10.1.0/24 # User-defined subnet from ipv4 namespace
-      gateway: 10.10.1.1 # User-defined gateway (optional, default is .1)
-      vlan: 1001 # User-defined VLAN from VLAN namespace
-      isolated: true # Makes subnet isolated from other subnets within the VPC (doesn't affect VPC peering)
-      restricted: true # Causes all hosts in the subnet to be isolated from each other
-
-    thrird-party-dhcp: # Another subnet
+          interfaceMTU: 1500
+      subnet: 10.10.1.0/24
+      gateway: 10.10.1.1
+      vlan: 1001
+      isolated: true
+      restricted: true
+    thrird-party-dhcp:
       dhcp:
-        relay: 10.99.0.100/24 # Use third-party DHCP server (DHCP relay configuration), access to it could be enabled using StaticExternal connection
+        relay: 10.99.0.100/24
       subnet: "10.10.2.0/24"
       vlan: 1002
-
-    another-subnet: # Minimal configuration is just a name, subnet and VLAN
+    another-subnet:
       subnet: 10.10.100.0/24
       vlan: 1100
-
-  permit: # Defines which subnets of the current VPC can communicate to each other, applied on top of subnets "isolated" flag (doesn't affect VPC peering)
-    - [subnet-1, subnet-2, subnet-3] # 1, 2 and 3 subnets can communicate to each other
-    - [subnet-4, subnet-5] # Possible to define multiple lists
-
-  staticRoutes: # Optional, static routes to be added to the VPC
-    - prefix: 10.100.0.0/24 # Destination prefix
-      nextHops: # Next hop IP addresses
-        - 10.200.0.0
 ```
 
-### Isolated and restricted subnets, permit lists
+Apply the VPC manifest:
+```bash
+kubectl apply -f vpc-1.yaml
+```
 
-Subnets can be isolated and restricted, with the ability to define permit lists to allow communication between specific
-isolated subnets. The permit list is applied on top of the isolated flag and doesn't affect VPC peering.
+> <details>
+> <summary>Advanced: Customizing DHCP and VLANs</summary>
+> - Use `dhcp.options` to specify PXE, DNS, NTP, and MTU settings.
+> - Set `relay` under `dhcp` for third-party DHCP servers.
+> - Assign unique VLANs per subnet to avoid conflicts.
+> </details>
 
-_Isolated subnet_ means that the subnet has no connectivity with other subnets within the VPC, but it could still be
-allowed by permit lists.
+## 2. Attach a VPC Subnet to a Device
 
-_Restricted subnet_ means that all hosts in the subnet are isolated from each other within the subnet.
-
-A Permit list contains a list. Every element of the list is a set of subnets that can communicate with each other.
-
-
-### Third-party DHCP server configuration
-
-In case you use a third-party DHCP server, by configuring `spec.subnets.<subnet>.dhcp.relay`, additional information is
-added to the DHCP packet forwarded to the DHCP server to make it possible to identify the VPC and subnet. This
-information is added under the RelayAgentInfo (option 82) in the DHCP packet. The relay sets two suboptions in the
-packet:
-
-* _VirtualSubnetSelection_ (suboption 151) is populated with the VRF which uniquely identifies a VPC on the Hedgehog
-  Fabric and will be in `VrfV<VPC-name>` format, for example `VrfVvpc-1` for a VPC named `vpc-1` in the Fabric API.
-* _CircuitID_ (suboption 1) identifies the VLAN which, together with the VRF (VPC) name, maps to a specific VPC subnet.
-
-## VPCAttachment
-
-A VPCAttachment represents a specific VPC subnet assignment to the `Connection` object which means a binding between an
-exact server port and a VPC.
-It basically leads to the VPC being available on the specific server port(s) on a subnet VLAN.
-
-VPC could be attached to a switch that is part of the VLAN namespace used by the VPC.
+Create an attachment manifest (e.g., `attach-server-1.yaml`):
 
 ```yaml
-apiVersion: vpc.githedgehog.com/v1beta1
-kind: VPCAttachment
+apiVersion: fabric.githedgehog.com/v1
+kind: VpcAttachment
 metadata:
-  name: vpc-1-server-1--mclag--s5248-01--s5248-02
-  namespace: default
+  name: attach-server-1
 spec:
   connection: server-1--mclag--s5248-01--s5248-02 # Connection name representing the server port(s)
   subnet: vpc-1/default # VPC subnet name
   nativeVLAN: true # (Optional) if true, the port will be configured as a native VLAN port (untagged)
 ```
 
-## VPCPeering
+Apply the attachment:
+```bash
+kubectl apply -f attach-server-1.yaml
+```
 
-A VPCPeering enables VPC-to-VPC connectivity. There are two types of VPC peering:
+## 3. Verify VPC and Attachment Status
+
+List VPCs:
+```bash
+kubectl get vpc
+```
+
+Describe a VPC for details:
+```bash
+kubectl describe vpc vpc-1
+```
+
+List attachments:
+```bash
+kubectl get vpcattachment
+```
+
+> **Tip:** Use `kubectl get conn` to see connection status between devices and subnets.
+
+## 4. Isolation and Restriction Settings
+
+- `isolated: true` (at subnet level): Subnet is isolated from other subnets within the same VPC.
+- `restricted: true`: Hosts in the subnet are isolated from each other.
+- `defaultIsolated`/`defaultRestricted`: Apply these defaults to all subnets unless overridden.
+
+> <details>
+> <summary>Troubleshooting</summary>
+> - Ensure VLANs and subnets do not overlap between VPCs.
+> - Check DHCP server settings if hosts do not receive IPs.
+> - Use `kubectl describe` for error details.
+> </details>
+
+## VPC Peering
+
+VPC peering enables VPC-to-VPC connectivity. There are two types of VPC peering:
 
 * Local: peering is implemented on the same switches where VPCs are attached
 * Remote: peering is implemented on the border/mixed leaves defined by the `SwitchGroup` object
 
-VPC peering is only possible between VPCs attached to the same IPv4 namespace (see [IPv4Namespace](#ipv4namespace))
-
-### Local VPC peering
+### Local VPC Peering
 
 ```yaml
 apiVersion: vpc.githedgehog.com/v1beta1
@@ -125,7 +139,7 @@ spec:
     vpc-2: {} # See "Subnet filtering" for more advanced configuration
 ```
 
-### Remote VPC peering
+### Remote VPC Peering
 
 ```yaml
 apiVersion: vpc.githedgehog.com/v1beta1
@@ -140,10 +154,9 @@ spec:
   remote: border # Indicates a switch group to implement the peering on
 ```
 
-### Subnet filtering
+### Subnet Filtering
 
-It's possible to specify which specific subnets of the peering VPCs could communicate to each other using the `permit`
-field.
+It's possible to specify which specific subnets of the peering VPCs could communicate to each other using the `permit` field.
 
 ```yaml
 apiVersion: vpc.githedgehog.com/v1beta1
@@ -195,3 +208,7 @@ spec:
   - from: 1000
     to: 2999
 ```
+
+---
+
+> **Next:** [User Guide Overview](./overview.md)

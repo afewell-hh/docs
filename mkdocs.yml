@@ -50,6 +50,15 @@ theme:
 
 nav:
   - Home: index.md
+  - User Guide:
+      - Overview: user-guide/overview.md
+      - Devices: user-guide/devices.md
+      - Profiles: user-guide/profiles.md
+      - VPCs: user-guide/vpcs.md
+      - External Peering: user-guide/external.md
+      - Grafana Dashboards: user-guide/grafana.md
+      - Shrink/Expand Fabric: user-guide/shrink-expand.md
+      - Connections: user-guide/connections.md
   - Tutorials:
       - Getting Started: tutorial/getting-started-lab.md
       - Demo Lab: tutorial/demo-lab.md
@@ -60,6 +69,13 @@ nav:
       - Add External Connectivity: how-to/add-external-connectivity.md
       - Troubleshooting Fabric: how-to/troubleshooting-fabric.md
       - Deploying CLI: how-to/deploying-cli.md
+  - Install & Upgrade:
+      - Requirements: install-upgrade/requirements.md
+      - Install Hedgehog Fabric: install-upgrade/install.md
+      - Upgrade Hedgehog Fabric: install-upgrade/upgrade.md
+      - Build Wiring: install-upgrade/build-wiring.md
+      - Configuration: install-upgrade/config.md
+      - Supported Devices: install-upgrade/supported-devices.md
   - Explanations:
       - Architecture Overview: explanation/architecture.md
       - VPC Peering and Isolation: explanation/vpc-peering.md
@@ -68,8 +84,9 @@ nav:
       - Fabric CLI Reference: reference/fabric-cli.md
       - Fabric API Reference: reference/fabric-api.md
       - Release Notes: reference/release-notes.md
-      - Supported Devices: reference/supported-devices.md
       - Deprecated API Reference: reference/fab-api.md
+  - FAQ:
+      - Overview: faq/overview.md
   - Contributing: contribute/docs.md
 
 extra:

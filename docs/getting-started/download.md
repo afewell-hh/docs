@@ -15,6 +15,10 @@ In order to use the software, log in to the registry using the following command
 docker login ghcr.io --username provided_user_name --password provided_token_string
 ```
 
+## Previewing Documentation Locally
+
+If you want to preview the Hedgehog documentation site on your local machine, see the [How-to Guide: Preview Documentation Locally](../how-to/preview-docs-locally.md) for a step-by-step checklist of prerequisites (Docker, just, GHCR credentials) and instructions.
+
 ## Downloading hhfab
 
 Currently `hhfab` is supported on Linux x86/arm64 (continuously tested on Ubuntu 24.04) and MacOS x86/arm64 (latest

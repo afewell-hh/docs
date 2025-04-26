@@ -1,83 +1,78 @@
+<!-- Diátaxis: Reference -->
+
 # Switch Profiles and Port Naming
+
+> **Learning Objectives**
+> By the end of this reference, you will:
+> - Understand the structure and purpose of SwitchProfiles in Hedgehog
+> - Interpret port naming conventions across supported hardware
+> - Identify how to configure port speeds, groups, and breakouts
+
+This reference explains the schema and conventions for switch profiles and port naming in Hedgehog Fabric. Use this as a lookup for supported features, configuration options, and naming standards.
 
 ## Switch Profiles
 
-All supported switches have a `SwitchProfile` that defines the switch model, supported features, and available ports
-with supported configurations such as port group and speeds as well as port breakouts. `SwitchProfiles` available
-in-cluster or generated documentation can be found in the [Reference section](../reference/profiles.md).
+All supported switches have a `SwitchProfile` that defines the switch model, supported features, and available ports with supported configurations such as port group and speeds as well as port breakouts. SwitchProfiles available in-cluster or generated documentation can be found in the [Reference section](../reference/profiles.md).
 
-Each switch used in the wiring diagram should have a `SwitchProfile` references in the `spec.profile` of the `Switch`
-object.
+Each switch used in the wiring diagram should have a `SwitchProfile` referenced in the `spec.profile` of the `Switch` object.
 
-Switch profile defines what features and ports are available on the switch. Based on the ports data in the profile, it's
-possible to set port speeds (for non-breakout and non-group ports), port group speeds and port breakout modes in the
-`Switch` object in the Fabric API.
+A switch profile defines what features and ports are available on the switch. Based on the ports data in the profile, it's possible to set port speeds (for non-breakout and non-group ports), port group speeds, and port breakout modes in the `Switch` object in the Fabric API.
 
 ## Port Naming
 
-Each switch port is named using one of the the following formats:
+Each switch port is named using one of the following formats:
 
 - `M<management-port-number>`
-    - `<management-port-number>` is the management port number starting from `1` (usually only one named `1` for most
-  switches)
-
-- `E<asic-or-chassis-number>/<port-number>[/<breakout>][.<subinterface.]`
-    - `<asic-or-chassis-number>` is the ASIC or chassis number (usually only one named `1` for the most switches)
+    - `<management-port-number>` is the management port number starting from `1` (usually only one named `1` for most switches)
+- `E<asic-or-chassis-number>/<port-number>[/<breakout>][.<subinterface>]`
+    - `<asic-or-chassis-number>` is the ASIC or chassis number (usually only one named `1` for most switches)
     - `<port-number>` is the port number on the ASIC or chassis, starting from `1`
-    - optional `/<breakout>` is the breakout number for the port, starting from `1`, only for breakout ports and always
-    consecutive numbers independent of the lanes allocation and other implementation details
+    - optional `/<breakout>` is the breakout number for the port, starting from `1`, only for breakout ports and always consecutive numbers independent of the lanes allocation and other implementation details
     - optional `.<subinterface>` is the subinterface number for the port
 
-Examples of port names:
+**Examples:**
+- `M1` — management port
+- `E1/1` — port `1` on ASIC/chassis `1`
+- `E1/55/1` — first breakout port of switch port `55` on ASIC/chassis `1`
 
-- `M1` - management port
-- `E1/1` - port `1` on the ASIC or chassis `1`, usually a first port on the switch
-- `E1/55/1` - first breakout port of the switch port `55` on the ASIC or chassis `1`
+## Available Port Types
 
-## Available Ports
+Each switch profile defines a set of ports available on the switch. Ports may be divided into the following types:
 
-Each switch profile defines a set of ports available on the switch. Ports could be divided into the following types.
-
-### Directly configurable ports
-
-Non-breakout and non-group ports. Would have a reference to the port profile with default and available speeds. Could
-be configured by setting the speed in the `Switch` object in the Fabric API:
+### Directly Configurable Ports
+Non-breakout and non-group ports. These have a reference to the port profile with default and available speeds. Configure by setting the speed in the `Switch` object:
 
 ```yaml
-.spec:
+spec:
   portSpeeds:
     E1/1: 25G
 ```
 
-### Port groups
-
-Ports that belong to a port group, non-breakout and not directly configurable. Would have a reference to the port group
-which will have a reference to the port profile with default and available speeds. Port couldn't be configured directly,
-speed configuration is applied to the whole group in the `Switch` object in the Fabric API:
+### Port Groups
+Some switches have port groups (e.g., 4 ports grouped together). Configure the group speed in the `Switch` object:
 
 ```yaml
-.spec:
-  portGroupSpeeds:
-    "1": 10G
+spec:
+  portGroups:
+    - group: [E1/5, E1/6, E1/7, E1/8]
+      speed: 100G
 ```
 
-It'll set the speed of all ports in the group `1` to `10G`, e.g. if the group `1` contains ports `E1/1`, `E1/2`, `E1/3`
-and `E1/4`, all of them will be set to `10G` speed.
-
-### Breakout ports
-
-Ports that are breakouts and non-group ports. Would have a reference to the port profile with default and available
-breakout modes. Could be configured by setting the breakout mode in the `Switch` object in the Fabric API:
+### Breakout Ports
+For ports supporting breakouts, specify the breakout mode:
 
 ```yaml
-.spec:
+spec:
   portBreakouts:
-    E1/55: 4x25G
+    E1/49: [25G, 25G, 25G, 25G]
 ```
 
-Configuring a port breakout mode will make "breakout" ports available for use in the wiring diagram. The breakout ports
-are named as `E<asic-or-chassis-number>/<port-number>/<breakout>`, e.g. `E1/55/1`, `E1/55/2`, `E1/55/3`, `E1/55/4` for
-the example above. Omitting the breakout number is allowed for the first breakout port, e.g. `E1/55` is the same as
-`E1/55/1`. The breakout ports are always consecutive numbers independent of the lanes allocation and other
-implementation details.
+> <details>
+> <summary>Advanced: Reference Tables</summary>
+> - See [Reference: Switch Profiles](../reference/profiles.md) for a complete list of supported switches, port layouts, and feature tables.
+> - For vendor-specific details, consult the hardware appendix.
+> </details>
 
+---
+
+> **Next:** [Devices](./devices.md)
