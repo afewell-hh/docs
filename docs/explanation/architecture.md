@@ -11,7 +11,7 @@ Hedgehog Fabric provides a programmable, cloud-native network fabric for data ce
 ## Core Concepts
 
 - **VPC (Virtual Private Cloud):**
-  Logical network segments, providing isolated Layer 2/3 domains for workloads. Each VPC can have its own subnet, VLAN, and DHCP configuration.
+  Logical network segments, providing isolated Layer 2/3 domains for workloads. Each VPC can have its own subnets, VLAN, and DHCP configuration.
 - **Switch:**
   A physical or virtual network device managed by the Fabric control plane. Switches connect servers, other switches, and external networks.
 - **Connection:**

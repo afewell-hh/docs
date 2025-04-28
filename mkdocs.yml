@@ -69,6 +69,7 @@ nav:
       - Add External Connectivity: how-to/add-external-connectivity.md
       - Troubleshooting Fabric: how-to/troubleshooting-fabric.md
       - Deploying CLI: how-to/deploying-cli.md
+      - Previewing Docs Locally: how-to/preview-docs-locally.md
   - Install & Upgrade:
       - Requirements: install-upgrade/requirements.md
       - Install Hedgehog Fabric: install-upgrade/install.md
@@ -83,8 +84,13 @@ nav:
   - Reference:
       - Fabric CLI Reference: reference/fabric-cli.md
       - Fabric API Reference: reference/fabric-api.md
-      - Release Notes: reference/release-notes.md
       - Deprecated API Reference: reference/fab-api.md
+  - Release Notes:
+      - Overview: release-notes/index.md
+  - VLAB:
+      - Overview: vlab/overview.md
+      - Demo: vlab/demo.md
+      - Running: vlab/running.md
   - FAQ:
       - Overview: faq/overview.md
   - Contributing: contribute/docs.md
