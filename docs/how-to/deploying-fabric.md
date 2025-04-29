@@ -1,7 +1,7 @@
 ---
 title: How to Deploy Hedgehog Fabric (Control Plane and Data Plane)
 version: Hedgehog v1.0.0
-last-verified: 2025-04-25
+last-verified: 2025-04-29
 hedgehog-release: v1.0.0
 type: How-to
 ---
@@ -12,6 +12,11 @@ type: How-to
 > Deploying Hedgehog Fabric will impact your network and may disrupt existing connectivity.
 > Always validate your deployment plan, review all prerequisites, and coordinate with affected teams.
 > Review [Release Notes](../reference/release-notes.md) and [Security Model](../explanation/security-model.md) for version-specific and security-impacting changes.
+
+**Learning Objectives**
+- Generate and install control node OS image using `hhfab`
+- Deploy control plane & data plane components in Kubernetes
+- Validate network connectivity and perform rollback
 
 ## Prerequisites
 
@@ -57,7 +62,24 @@ type: How-to
 
 ---
 
-## Step 3: Deploy the Control Plane
+## Step 3: Build Control Node Configuration & Installer
+
+1. Initialize wiring and configuration:
+   ```bash
+   hhfab init --wiring wiring.yaml
+   ```
+2. Build OS installer image:
+   ```bash
+   hhfab build --output control-os.img fab.yaml
+   ```
+3. Prepare installation media:
+   ```bash
+   dd if=control-os.img of=<device> bs=4M status=progress
+   ```
+
+---
+
+## Step 4: Deploy the Control Plane
 
 1. Apply the control plane manifests:
    ```bash
@@ -71,7 +93,7 @@ type: How-to
 
 ---
 
-## Step 4: Deploy the Data Plane (Switches/Devices)
+## Step 5: Deploy the Data Plane (Switches/Devices)
 
 1. Register each device (switch) in Fabric:
    ```bash
@@ -90,7 +112,7 @@ type: How-to
 
 ---
 
-## Step 5: Initial Network Validation
+## Step 6: Initial Network Validation
 
 1. Create a test VPC and attach it to a switch:
    ```bash
@@ -106,6 +128,31 @@ type: How-to
    ```bash
    kubectl fabric inspect vpc --name test-vpc
    kubectl fabric inspect connection --name <switch-connection>
+   ```
+
+---
+
+## Step 7: Upgrade Hedgehog Fabric
+
+### Upgrades from Beta-1 Onwards
+
+1. Export current fabric config:
+   ```bash
+   hhfab config export > fab.yaml
+   ```
+2. Initialize upgrade:
+   ```bash
+   hhfab init -c fab.yaml -f
+   hhfab build --mode=manual
+   ```
+3. Upload and apply upgrade package:
+   ```bash
+   scp result/*.tgz <node>:/tmp/
+   tar xzf *.tgz && sudo ./hhfab-recipe upgrade
+   ```
+4. Validate upgrade:
+   ```bash
+   kubectl -n fab get fabric default -o jsonpath='{.status.versions.fabricator.controller}'
    ```
 
 ---
@@ -134,7 +181,7 @@ If deployment fails or must be reverted:
 ---
 
 ## What’s Next?
-- [Upgrading Fabric](./upgrading-fabric.md)
+
 - [Adding External Connectivity](./add-external-connectivity.md)
 - [Device Replacement](./device-replacement.md)
 - [Reference: Fabric CLI](../reference/fabric-cli.md)

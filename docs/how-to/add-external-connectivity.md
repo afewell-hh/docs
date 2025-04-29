@@ -1,7 +1,7 @@
 ---
 title: How to Add External Connectivity to a Hedgehog Fabric VPC
 version: Hedgehog v1.0.0
-last-verified: 2025-04-25
+last-verified: 2025-04-29
 hedgehog-release: v1.0.0
 type: How-to
 ---
@@ -12,6 +12,49 @@ type: How-to
 > Exposing a VPC to external networks (WAN, internet, or other clouds) increases security risk.
 > Validate all policies and review security considerations before proceeding.
 > Review [Security Model](../explanation/security-model.md) and [Release Notes](../reference/release-notes.md) for version-specific and security-impacting changes.
+
+## Concept: Border Leaf and Edge Integration
+
+Traffic exits from the Fabric on Border Leaves connected to Edge devices. Border Leaves:
+- Terminate L2VPN connections
+- Distinguish VPC L3 routable traffic toward Edge devices
+- Land VPC servers
+
+> **Note:** External Peering is only available on switch devices capable of sub-interfaces.
+
+### Edge Device Requirements
+- Set up BGP IPv4 to advertise/receive routes from the Fabric
+- Connect to a Fabric Border Leaf over VLAN
+- Mark egress routes toward the Fabric with BGP Communities
+- Filter ingress routes from the Fabric by BGP Communities
+
+### Concept: Control Plane: BGP Peering
+
+The Fabric shares VPC routes with Edge devices via BGP. Peering is done over VLAN in IPv4 Unicast AFI/SAFI.
+
+### Concept: Data Plane: VLAN Tagging
+
+VPC L3 routable traffic is tagged with VLAN and sent to the Edge device. Further processing (e.g., NAT, PBR) is performed on the Edge.
+
+### Filter and Policy Examples
+
+Each VPC can be allowed to access Edge devices. Filtering can be applied to routes exported to or imported from Edge devices. Example:
+```yaml
+spec:
+  permit:
+    external:
+      name: ###
+      prefixes:
+      - prefix: 0.0.0.0/0 # allow default route
+```
+
+## Learning Objectives
+- Understand how to configure external peering for Hedgehog Fabric
+- Connect Border Leaf switches to Edge devices for L3 connectivity
+- Apply BGP and VLAN configuration for route exchange
+- Enforce filtering and policies for VPC traffic to/from Edge
+- Create and apply Kubernetes resources (External, Connection, ExternalAttachment, ExternalPeering)
+- Validate and troubleshoot connectivity
 
 ## Prerequisites
 
@@ -70,7 +113,17 @@ type: How-to
 
 ---
 
-## Step 3: Validate Connectivity
+## Step 3: Configure External Peering (API Example)
+
+Use the [Fabric API Reference](../reference/fabric-api.md#external) or apply the following manifests:
+```bash
+kubectl apply -f external.yaml
+kubectl apply -f connection.yaml
+kubectl apply -f external-attachment.yaml
+kubectl apply -f external-peering.yaml
+```
+
+## Step 4: Validate Connectivity
 
 1. From a server in the VPC, test external reachability:
    ```bash

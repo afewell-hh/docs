@@ -59,13 +59,23 @@ nav:
       - Grafana Dashboards: user-guide/grafana.md
       - Shrink/Expand Fabric: user-guide/shrink-expand.md
       - Connections: user-guide/connections.md
+  - Concepts:
+      - Overview: concepts/overview.md
+  - Architecture:
+      - Overview: architecture/overview.md
+      - Hedgehog Network Fabric: architecture/fabric.md
   - Tutorials:
-      - Getting Started: tutorial/getting-started-lab.md
+      - Getting Started:
+          - Overview: tutorial/getting-started.md
+          - Download CLI: getting-started/download.md
+          - Deploy Your First Virtual Lab: tutorial/getting-started-lab.md
       - Demo Lab: tutorial/demo-lab.md
       - Running VLAB: tutorial/running-vlab.md
   - How-to Guides:
       - Power-Reset a Switch: how-to/power-reset-switch.md
       - Upgrade Hedgehog Fabric: how-to/upgrading-fabric.md
+      - Deploy Hedgehog Fabric: how-to/deploying-fabric.md
+      - Replace a Device: how-to/device-replacement.md
       - Add External Connectivity: how-to/add-external-connectivity.md
       - Troubleshooting Fabric: how-to/troubleshooting-fabric.md
       - Deploying CLI: how-to/deploying-cli.md
@@ -77,14 +87,18 @@ nav:
       - Build Wiring: install-upgrade/build-wiring.md
       - Configuration: install-upgrade/config.md
       - Supported Devices: install-upgrade/supported-devices.md
+  - Known Limitations: known-limitations/known-limitations.md
   - Explanations:
-      - Architecture Overview: explanation/architecture.md
+      - Profiles & Devices: explanation/profiles-devices.md
       - VPC Peering and Isolation: explanation/vpc-peering.md
       - Security Model: explanation/security-model.md
   - Reference:
       - Fabric CLI Reference: reference/fabric-cli.md
       - Fabric API Reference: reference/fabric-api.md
-      - Deprecated API Reference: reference/fab-api.md
+      - CLI: reference/cli.md
+      - Profiles Reference: reference/profiles.md
+      - Releases Reference: reference/releases.md
+      - Supported Devices Reference: reference/supported-devices.md
   - Release Notes:
       - Overview: release-notes/index.md
   - VLAB:

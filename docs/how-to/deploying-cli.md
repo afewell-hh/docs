@@ -1,12 +1,25 @@
 ---
-title: Deploying Hedgehog CLI
+title: Deploying Hedgehog Fabricator (hhfab)
 version: Hedgehog v1.0.0
-last-verified: 2025-04-25
+last-verified: 2025-04-29
 hedgehog-release: v1.0.0
 type: How-to
 ---
 
 ## Overview
+
+**Note:** This guide covers the `hhfab` fabricator utility. To install the Fabric CLI plugin (`kubectl fabric`), see [Deploying Fabric CLI](deploying-fabric-cli.md).
+
+**Learning Objectives**
+- Install the Hedgehog Fabricator CLI (`hhfab`)
+- Authenticate hhfab with GitHub Package Registry
+- Initialize VLAB topology with hhfab
+
+**Prerequisites**
+- Docker installed and running
+- ORAS CLI for OCI registries
+- QEMU/KVM for VLAB
+- Design Partner Agreement (early access)
 
 This guide provides detailed, step-by-step instructions for deploying the Hedgehog CLI (`hhfab`) on supported platforms.
 It covers prerequisites, obtaining access, installation, initial configuration, and basic validation.
@@ -180,7 +193,7 @@ If you find any issues or gaps, please update this doc and the [tracking sheet](
 <!--
 Diátaxis: How-to Guide
 Version: Hedgehog v1.0.0
-Last verified: 2025-04-25
+Last verified: 2025-04-29
 -->
 
 *This document is maintained according to Diátaxis and Hedgehog quality standards. Please flag any inaccuracies or gaps for audit and improvement.*
