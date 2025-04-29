@@ -1,8 +1,11 @@
 ---
-title: Architecture Overview
+title: Architecture Overview (Deprecated)
 version: Hedgehog v1.0.0
 type: Explanation
 ---
+> **⚠️ DEPRECATED** This page has been consolidated into [Architecture Overview](../architecture/overview.md). Please refer to that canonical page for the full content.
+
+<!-- Original content archived below for reference -->
 
 # Hedgehog Fabric Virtual Networking Architecture
 

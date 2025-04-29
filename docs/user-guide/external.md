@@ -1,3 +1,11 @@
+---
+title: External Peering (Deprecated)
+version: Hedgehog v1.0.0
+type: User Guide
+---
+> **⚠️ DEPRECATED** This page has been consolidated into [How to Add External Connectivity](../how-to/add-external-connectivity.md). Please refer to that canonical guide.
+<!-- Original content archived below for reference -->
+
 <!-- Diátaxis: How-to Guide -->
 
 # External Peering

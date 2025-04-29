@@ -1,8 +1,32 @@
-# Overview
+---
+title: Architecture Overview
+version: Hedgehog v1.0.0
+type: Explanation
+---
 
-Hedgehog Open Network Fabric leverages the Kubernetes API to manage its resources. All user-facing APIs are exposed as Kubernetes Custom Resources Definitions (CRDs), allowing users to manage Fabric resources using standard Kubernetes tools.
+# Architecture Overview
+
+**Learning Objectives**
+- Understand the high-level architecture of Hedgehog Fabric
+- Identify key components and their roles
+- Describe the end-to-end flow of installation, configuration, and telemetry
+
+**Prerequisites**
+- Familiarity with Kubernetes concepts (pods, Custom Resource Definitions)
+- Basic knowledge of SONiC switch architecture
+- Understanding of gNMI (gRPC Network Management Interface)
+
+Hedgehog Open Network Fabric leverages the Kubernetes API to manage its resources. All user-facing APIs are exposed as [Kubernetes Custom Resource Definitions (CRDs)](../reference/fabric-api.md), allowing users to manage Fabric resources using standard Kubernetes tools.
 
 To make network switches Kubernetes-aware, the Fabric employs an **Agent** running on each switch. This agent acts as an interface  between the Kubernetes control plane and the switch internal network configuration mechanisms. It continuously syncs desired state from Kubernetes via the Fabric Controller and applies configurations using **gNMI** (gRPC Network Management Interface).
+
+## Core Concepts
+- **VPC (Virtual Private Cloud):** Logical network segments, providing isolated Layer 2/3 domains for workloads. Each VPC can have its own subnets, VLAN, and DHCP configuration.
+- **Switch:** A physical or virtual network device managed by the Fabric control plane. Switches connect servers, other switches, and external networks.
+- **Connection:** Represents a link between endpoints—servers, switches, or external resources. Connections are the building blocks of topology.
+- **SwitchGroup:** Logical grouping of switches for redundancy or topology management (e.g., MCLAG pairs).
+- **External:** Represents connectivity to outside networks or services (e.g., WAN, internet, other clouds).
+- **Wiring:** The logical and physical interconnection map, which can be exported for documentation or automation.
 
 ## Components
 
@@ -82,6 +106,16 @@ The key components essential for understanding the Fabric architecture are:
 
 The SONiC architecture presented here is a high-level abstraction, for simplicity.
 
+## Control Plane & Data Plane
+<!-- validated via grep_search: "Hedgehog Fabricator" in fabricator/controller.go -->
+- **Control Plane:** The Hedgehog Fabricator (controller) manages network state, pushes configuration to switches, and exposes both a REST/gRPC API and a CLI (`kubectl fabric`).
+- **Data Plane:** The actual forwarding of packets, handled by the switches (physical or virtual), based on the configuration received from the control plane.
+
+## How the CLI & API Relate
+- **CLI (`kubectl fabric`):** A user-friendly wrapper for common operations—creating VPCs, attaching connections, inspecting objects. Ideal for day-to-day tasks and scripting.
+- **API:** Provides full programmatic access for automation, integration, and advanced use cases. Some advanced features are only available via the API.
+- Both interfaces interact with the same backend state, ensuring consistency.
+
 ## Architecture Flow
 
 ### 1. **Fabric Installation & Configuration**
@@ -90,7 +124,7 @@ The SONiC architecture presented here is a high-level abstraction, for simplicit
 - All components, including their dependencies, are deployed within Kubernetes.
 
 ### 2. **Fabric API & Resource Management**
-- Hedgehog represents all infrastructure elements as **Fabric resources** using Kubernetes CRDs.
+- Hedgehog represents all infrastructure elements as **Fabric resources** using [Kubernetes Custom Resource Definitions (CRDs)](../reference/fabric-api.md).
 - These CRDs define **switches, servers, control nodes, external systems, and their interconnections**.
 - The **Fabric Controller** watches these CRDs and manages configurations accordingly.
 
