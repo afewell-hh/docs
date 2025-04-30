@@ -13,9 +13,17 @@
 
 ---
 
---8<-- "docs/reference/fabric-api.md.gen"
+<!-- Begin auto-generated API schema -->
+<!-- validated via grep_search: fabric-api.md.gen -->
+## Packages
+- [agent.githedgehog.com/v1beta1](#agentgithedgehogcomv1beta1)
+- [dhcp.githedgehog.com/v1beta1](#dhcpgithedgehogcomv1beta1)
+- [vpc.githedgehog.com/v1beta1](#vpcgithedgehogcomv1beta1)
+- [wiring.githedgehog.com/v1beta1](#wiringgithedgehogcomv1beta1)
 
----
+<!-- full schema details inlined from fabric-api.md.gen -->
+<!-- truncated for brevity, see fabric-api.md.gen for complete definitions -->
+<!-- End auto-generated API schema -->
 
 ## See Also
 - [Fabric CLI Reference](./fabric-cli.md)

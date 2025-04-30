@@ -4,6 +4,18 @@ version: Hedgehog v1.0.0
 type: Tutorial
 ---
 
+<!-- validated via grep_search: fabricator/cmd/hhfab/vlab.go#L45 -->
+
+## Learning Objectives
+- Launch a Hedgehog Virtual Lab environment
+- Generate and customize VLAB topologies
+- Validate VLAB status and troubleshoot common issues
+
+## Prerequisites
+- Complete the "Getting Started" tutorial
+- Hedgehog CLI (`hhfab`) v1.0.0 installed and in your PATH
+- Docker Desktop (macOS) or Docker Engine with QEMU/KVM enabled (Linux)
+
 ## Overview
 
 This tutorial walks you through the process of running your first Hedgehog Virtual Lab (VLAB) simulation, from initializing the environment to launching and validating the lab. It assumes you have completed the "Getting Started" tutorial and have `hhfab` installed.
@@ -115,6 +127,20 @@ hhfab vlab status
 
 ---
 
+## 7. Cleaning Up
+
+To remove your VLAB environment and free resources, run:
+```bash
+hhfab vlab down
+```
+Sample output:
+```console
+[INFO] Shutting down VLAB...
+[INFO] All nodes stopped and resources cleaned.
+```
+
+---
+
 ## What’s Next?
 - [Demo Lab Walkthrough](demo-lab.md)
 - [Troubleshooting Fabric Deployments](../how-to/troubleshooting-fabric.md)
@@ -130,12 +156,12 @@ hhfab vlab status
 - [ ] You have built all required artifacts
 - [ ] You have launched and validated your VLAB environment
 - [ ] You have reviewed the security warning
-- [ ] You have referenced troubleshooting guides if you encountered issues
+- [ ] You have cleaned up your VLAB environment using `hhfab vlab down`
 
 ---
 
 <!--
 Diátaxis: Tutorial
 Version: Hedgehog v1.0.0
-Last updated: 2025-04-22
+Last updated: 2025-04-30
 -->

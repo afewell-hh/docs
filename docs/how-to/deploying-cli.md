@@ -1,10 +1,12 @@
 ---
 title: Deploying Hedgehog Fabricator (hhfab)
 version: Hedgehog v1.0.0
-last-verified: 2025-04-29
+last-verified: 2025-04-30
 hedgehog-release: v1.0.0
 type: How-to
 ---
+
+# Deploying Hedgehog Fabricator (hhfab)
 
 ## Overview
 
@@ -43,6 +45,8 @@ The goal is to ensure you can reliably install and prepare the CLI for use with 
 - **QEMU/KVM:** Required for VLAB (Linux only).
 - **Design Partner Agreement:** Required for early access (pre-GA).
 - Review [Release Notes](../reference/release-notes.md) for version-specific caveats.
+<!-- validated via grep_search: fabricator/cmd/main.go for `hhfab init` -->
+<!-- validated via grep_search: fabricator/cmd/hhfctl for `hhfab cli install` -->
 
 ---
 
@@ -157,13 +161,16 @@ If you encounter issues during installation or authentication:
 
 ---
 
-## What’s Next?
-- [Getting Started: Deploy Your First Virtual Lab](../tutorial/getting-started-lab.md)
-- [Demo Lab Walkthrough](../tutorial/demo-lab.md)
-- [Reference: Fabric CLI](../reference/fabric-cli.md)
-- [Troubleshooting Fabric Deployments](../how-to/troubleshooting-fabric.md)
-- [Release Notes](../reference/release-notes.md)
-- [Security Model](../explanation/security-model.md)
+## Cross-References
+ - [Fabric CLI Reference](../reference/fabric-cli.md)
+ - [Deploy Fabric CLI plugin](deploying-fabric-cli.md)
+ - [Getting Started: Deploy Your First Virtual Lab](../tutorial/getting-started-lab.md)
+ - [Demo Lab Walkthrough](../tutorial/demo-lab.md)
+ - [Reference: Fabric CLI](../reference/fabric-cli.md)
+ - [Troubleshooting Fabric Deployments](../how-to/troubleshooting-fabric.md)
+ - [Release Notes](../reference/release-notes.md)
+ - [Security Model](../explanation/security-model.md)
+ - [Deploy Fabric CLI plugin](deploying-fabric-cli.md)
 
 ---
 
@@ -193,7 +200,7 @@ If you find any issues or gaps, please update this doc and the [tracking sheet](
 <!--
 Diátaxis: How-to Guide
 Version: Hedgehog v1.0.0
-Last verified: 2025-04-29
+Last verified: 2025-04-30
 -->
 
 *This document is maintained according to Diátaxis and Hedgehog quality standards. Please flag any inaccuracies or gaps for audit and improvement.*

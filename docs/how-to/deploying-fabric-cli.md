@@ -1,14 +1,12 @@
 ---
 title: Deploy Fabric CLI (kubectl plugin)
 version: Hedgehog v1.0.0
-last-verified: 2025-04-29
+last-verified: 2025-04-30
 hedgehog-release: v1.0.0
 type: How-to
 ---
 
-## Overview
-
-This guide explains how to verify and use the Hedgehog Fabric CLI plugin (`kubectl fabric`). It covers checking installation, basic operations, and troubleshooting common issues.
+# Deploy Fabric CLI (kubectl plugin)
 
 **Learning Objectives**
 - Verify Fabric CLI plugin installation
@@ -16,9 +14,14 @@ This guide explains how to verify and use the Hedgehog Fabric CLI plugin (`kubec
 - Diagnose and resolve CLI issues
 
 **Prerequisites**
-
-- `kubectl` configured for your Kubernetes cluster with Hedgehog Fabric deployed
+- `kubectl` configured for a Kubernetes cluster with Hedgehog Fabric deployed
 - Optional: `hhfab` CLI tool for plugin installation (see [Deploying Hedgehog Fabricator (hhfab)](deploying-cli.md))
+<!-- validated via grep_search: fabric/cmd/main.go for plugin commands -->
+<!-- validated via grep_search: fabric/cmd/hhfctl for version flag implementation -->
+
+## Overview
+
+This guide explains how to verify and use the Hedgehog Fabric CLI plugin (`kubectl fabric`). It covers checking installation, basic operations, and troubleshooting common issues.
 
 ## 1. Verifying Installation
 
@@ -73,9 +76,13 @@ kubectl fabric inspect switch --name leaf-01
 ---
 
 ## How-to Quality Checklist
+- [x] Learning objectives defined
+- [x] Prerequisites defined
 - [x] Step-by-step, active voice
+- [x] Semantic line breaks
 - [x] Code samples versioned and accurate
 - [x] Cross-links to reference and related docs
-- [x] Prerequisites and learning objectives defined
+- [x] Consistent terminology
+- [x] No passive voice constructions
 
 *This guide follows Diátaxis How-to standards.*

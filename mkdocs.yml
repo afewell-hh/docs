@@ -50,20 +50,6 @@ theme:
 
 nav:
   - Home: index.md
-  - User Guide:
-      - Overview: user-guide/overview.md
-      - Devices: user-guide/devices.md
-      - Profiles: user-guide/profiles.md
-      - VPCs: user-guide/vpcs.md
-      - External Peering: user-guide/external.md
-      - Grafana Dashboards: user-guide/grafana.md
-      - Shrink/Expand Fabric: user-guide/shrink-expand.md
-      - Connections: user-guide/connections.md
-  - Concepts:
-      - Overview: concepts/overview.md
-  - Architecture:
-      - Overview: architecture/overview.md
-      - Hedgehog Network Fabric: architecture/fabric.md
   - Tutorials:
       - Getting Started:
           - Overview: tutorial/getting-started.md
@@ -72,41 +58,60 @@ nav:
       - Demo Lab: tutorial/demo-lab.md
       - Running VLAB: tutorial/running-vlab.md
   - How-to Guides:
-      - Power-Reset a Switch: how-to/power-reset-switch.md
-      - Upgrade Hedgehog Fabric: how-to/upgrading-fabric.md
-      - Deploy Hedgehog Fabric: how-to/deploying-fabric.md
-      - Replace a Device: how-to/device-replacement.md
-      - Add External Connectivity: how-to/add-external-connectivity.md
-      - Troubleshooting Fabric: how-to/troubleshooting-fabric.md
-      - Deploying CLI: how-to/deploying-cli.md
-      - Previewing Docs Locally: how-to/preview-docs-locally.md
-  - Install & Upgrade:
-      - Requirements: install-upgrade/requirements.md
-      - Install Hedgehog Fabric: install-upgrade/install.md
-      - Upgrade Hedgehog Fabric: install-upgrade/upgrade.md
-      - Build Wiring: install-upgrade/build-wiring.md
-      - Configuration: install-upgrade/config.md
-      - Supported Devices: install-upgrade/supported-devices.md
-  - Known Limitations: known-limitations/known-limitations.md
-  - Explanations:
+      - Getting Started:
+      - Deploying:
+          - Deploying CLI: how-to/deploying-cli.md
+          - Deploying Fabric: how-to/deploying-fabric.md
+          - Fabric CLI: how-to/deploying-fabric-cli.md
+      - External Connectivity: how-to/add-external-connectivity.md 
+      - Device Management: 
+          - Device Replacement: how-to/device-replacement.md
+          - Power Reset Switch: how-to/power-reset-switch.md
+      - Maintenance:
+          - Upgrading Fabric: how-to/upgrading-fabric.md
+          - Troubleshooting: how-to/troubleshooting-fabric.md
+      - Documentation: how-to/preview-docs-locally.md
+  - Explanation:
+      - Concepts: concepts/concepts-overview.md
+      - Troubleshooting: troubleshooting/overview.md
+      - Architecture:
+          - Overview: architecture/overview.md
+          - Hedgehog Network Fabric: architecture/fabric.md
+      - User Guide:
+          - Overview: user-guide/overview.md
+          - Devices: user-guide/devices.md
+          - Profiles: user-guide/profiles.md
+          - VPCs: user-guide/vpcs.md
+          - Connections: user-guide/connections.md
+          - External Connectivity: user-guide/external.md
+          - Shrink & Expand: user-guide/shrink-expand.md
+          - Grafana: user-guide/grafana.md
       - Profiles & Devices: explanation/profiles-devices.md
       - VPC Peering and Isolation: explanation/vpc-peering.md
       - Security Model: explanation/security-model.md
   - Reference:
-      - Fabric CLI Reference: reference/fabric-cli.md
-      - Fabric API Reference: reference/fabric-api.md
-      - CLI: reference/cli.md
-      - Profiles Reference: reference/profiles.md
-      - Releases Reference: reference/releases.md
-      - Supported Devices Reference: reference/supported-devices.md
+      - Fabric API: reference/fabric-api.md
+      - Fabric CLI: reference/fabric-cli.md
+      - CLI Commands: reference/cli.md
+      - Profiles: reference/profiles.md
+      - Supported Devices: reference/supported-devices.md
+      - Release Notes: reference/release-notes.md
+      - Releases: reference/releases.md
+  - Installation & Upgrade:
+      - Requirements: install-upgrade/requirements.md
+      - Installation: install-upgrade/install.md
+      - Configuration: install-upgrade/config.md
+      - Upgrade: install-upgrade/upgrade.md
+      - Build & Wiring: install-upgrade/build-wiring.md
+      - Supported Devices: install-upgrade/supported-devices.md
+  - Known Limitations: known-limitations/known-limitations.md
   - Release Notes:
       - Overview: release-notes/index.md
   - VLAB:
       - Overview: vlab/overview.md
+      - Running VLAB: vlab/running.md
       - Demo: vlab/demo.md
-      - Running: vlab/running.md
-  - FAQ:
-      - Overview: faq/overview.md
+  - FAQ: faq/overview.md
   - Contributing: contribute/docs.md
 
 extra:
