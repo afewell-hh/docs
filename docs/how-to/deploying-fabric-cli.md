@@ -2,6 +2,7 @@
 title: Deploy Fabric CLI (kubectl plugin)
 version: Hedgehog v1.0.0
 last-verified: 2025-04-29
+hedgehog-release: v1.0.0
 type: How-to
 ---
 
@@ -15,8 +16,9 @@ This guide explains how to verify and use the Hedgehog Fabric CLI plugin (`kubec
 - Diagnose and resolve CLI issues
 
 **Prerequisites**
+
 - `kubectl` configured for your Kubernetes cluster with Hedgehog Fabric deployed
-- Optional: `hhfab` CLI tool for plugin installation (see [Deploy Fabricator CLI](deploying-cli.md))
+- Optional: `hhfab` CLI tool for plugin installation (see [Deploying Hedgehog Fabricator (hhfab)](deploying-cli.md))
 
 ## 1. Verifying Installation
 
